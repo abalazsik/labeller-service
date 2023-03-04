@@ -22,6 +22,7 @@ public class H2Label implements Serializable {
     public static final String PARENT = "parent";
     public static final String CREATION_DATE = "creation_date";
     public static final String UPDATE_DATE = "update_date";
+    public static final String VERSION = "version";
 
     @Id
     private LabelId id;
@@ -46,6 +47,9 @@ public class H2Label implements Serializable {
     
     @Column(UPDATE_DATE)
     private LocalDateTime updateDate;
+    
+    @Column(VERSION)
+    private long version;
 
     public H2Label() {
     }
@@ -57,7 +61,8 @@ public class H2Label implements Serializable {
             boolean technical, 
             LabelId parent, 
             LocalDateTime creationDate,
-            LocalDateTime updateDate) {
+            LocalDateTime updateDate,
+            long version) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -66,6 +71,7 @@ public class H2Label implements Serializable {
         this.parent = parent;
         this.creationDate = creationDate;
         this.updateDate = updateDate;
+        this.version = version;
     }
 
     public LabelId getId() {
@@ -130,6 +136,14 @@ public class H2Label implements Serializable {
 
     public void setUpdateDate(LocalDateTime updateDate) {
         this.updateDate = updateDate;
+    }
+
+    public long getVersion() {
+        return version;
+    }
+
+    public void setVersion(long version) {
+        this.version = version;
     }
     
 }

@@ -2,6 +2,8 @@ package com.mycompany.labeller.web;
 
 import com.mycompany.labeller.commons.roles.Roles;
 import com.mycompany.labeller.domain.data.LabelRange;
+import com.mycompany.labeller.domain.data.attributes.LabelCreationDate;
+import com.mycompany.labeller.domain.data.attributes.NullableStringAttribute;
 import com.mycompany.labeller.domain.services.LabelService;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -35,15 +37,16 @@ public class LabelExporter {
             row.createCell(1).setCellValue(label.getName().getValue());
 
             if (label.getDescription() != null) {
-                row.createCell(2).setCellValue(label.getDescription().getValue());
+                row.createCell(2).setCellValue(NullableStringAttribute.getValue(label.getDescription()));
             }
 
             if (label.getClassifierData() != null) {
-                row.createCell(3).setCellValue(label.getClassifierData().getValue());
+                row.createCell(3).setCellValue(NullableStringAttribute.getValue(label.getClassifierData()));
             }
 
-            row.createCell(4).setCellValue(label.getCreationDate().getValue().toString());
-            row.createCell(5).setCellValue(label.getTechnical().value());
+            row.createCell(4).setCellValue(LabelCreationDate.getValue(label.getCreationDate()));
+            row.createCell(5).setCellValue(LabelCreationDate.getValue(label.getUpdateDate()));
+            row.createCell(6).setCellValue(label.getTechnical().value());
             if (label.getParent() != null) {
                 row.createCell(6).setCellValue(label.getParent().getValue());
             }

@@ -12,6 +12,8 @@ import com.mycompany.labeller.domain.data.attributes.LabelId;
 import com.mycompany.labeller.domain.data.attributes.LabelName;
 import com.mycompany.labeller.domain.data.attributes.LabelTechnical;
 import com.mycompany.labeller.domain.data.attributes.LabelUpdateDate;
+import com.mycompany.labeller.domain.data.attributes.LabelVersion;
+import com.mycompany.labeller.domain.data.attributes.NullableStringAttribute;
 import com.mycompany.labeller.domain.repository.LabelRepository;
 import com.mycompany.labeller.neo4j.Neo4JLabel;
 import com.mycompany.labeller.neo4j.repository.Neo4JLabelRepository;
@@ -46,11 +48,12 @@ public class Neo4JLabelStorage implements LabelRepository {
         Neo4JLabel n4l = new Neo4JLabel();
         
         n4l.setName(createLabel.getName().getValue());
-        n4l.setDescription(createLabel.getDescription().getValue());
-        n4l.setClassifierData(createLabel.getClassifierData().getValue());
+        n4l.setDescription(NullableStringAttribute.getValue(createLabel.getDescription()));
+        n4l.setClassifierData(NullableStringAttribute.getValue(createLabel.getClassifierData()));
         n4l.setTechnical(createLabel.getTechnical().value());
-        n4l.setCreationDate(createLabel.getCreationTime().getValue());
-        n4l.setUpdateDate(createLabel.getCreationTime().getValue());
+        n4l.setCreationDate(LabelCreationDate.getValue(createLabel.getCreationTime()));
+        n4l.setUpdateDate(LabelUpdateDate.getValue(createLabel.getCreationTime()));
+        n4l.setVersion(createLabel.getVersion().getValue());
         
         if (createLabel.getParent() != null) {
             Optional<Neo4JLabel> optional = repository.findById(createLabel.getParent().getValue());
@@ -83,13 +86,14 @@ public class Neo4JLabelStorage implements LabelRepository {
     }
     
     @Override
-    public void update(UpdateLabelWithDate update) {
+    public LabelVersion update(UpdateLabelWithDate update) {
         Neo4JLabel n4l = repository.findById(update.getId().getValue()).get();
         
-        n4l.setClassifierData(update.getClassifierData().getValue());
-        n4l.setDescription(update.getDescription().getValue());
+        n4l.setDescription(NullableStringAttribute.getValue(update.getDescription()));
+        n4l.setClassifierData(NullableStringAttribute.getValue(update.getClassifierData()));
         n4l.setName(update.getName().getValue());
         n4l.setTechnical(update.getTechnical().value());
+        n4l.setVersion(update.getVersion().getValue());
         
         if (update.getParent() != null) {
             Optional<Neo4JLabel> optional = repository.findById(update.getParent().getValue());
@@ -97,6 +101,8 @@ public class Neo4JLabelStorage implements LabelRepository {
         }
         
         repository.save(n4l);
+        
+        return update.getVersion();
     }
     
     private Label toDomain(Neo4JLabel n4jl) {
@@ -108,7 +114,9 @@ public class Neo4JLabelStorage implements LabelRepository {
                 LabelTechnical.of(n4jl.isTechnical()),
                 CachedLabelId.of(n4jl.getChildOf().getId()),
                 new LabelCreationDate(n4jl.getCreationDate()),
-                new LabelUpdateDate(n4jl.getUpdateDate()));
+                new LabelUpdateDate(n4jl.getUpdateDate()),
+                new LabelVersion(n4jl.getVersion())
+        );
     }
     
 }

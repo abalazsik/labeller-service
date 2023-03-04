@@ -7,19 +7,16 @@ import java.util.Objects;
  *
  * @author ador
  */
-public class LabelUpdateDate extends DomainAttribute {
-
-    private final LocalDateTime value;
+public class LabelUpdateDate extends NullableLocalDateTimeAttribute {
 
     public LabelUpdateDate(LocalDateTime value) {
-        notNull(value);
-        this.value = value;
+        super(value);
     }
 
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 67 * hash + Objects.hashCode(this.value);
+        hash = 61 * hash + Objects.hashCode(getValue(this));
         return hash;
     }
 
@@ -35,11 +32,7 @@ public class LabelUpdateDate extends DomainAttribute {
             return false;
         }
         final LabelUpdateDate other = (LabelUpdateDate) obj;
-        return Objects.equals(this.value, other.value);
-    }
-
-    public LocalDateTime getValue() {
-        return value;
+        return Objects.equals(getValue(this), getValue(other));
     }
 
 }

@@ -5,12 +5,13 @@ import com.mycompany.labeller.domain.data.attributes.LabelDescription;
 import com.mycompany.labeller.domain.data.attributes.LabelId;
 import com.mycompany.labeller.domain.data.attributes.LabelName;
 import com.mycompany.labeller.domain.data.attributes.LabelTechnical;
+import com.mycompany.labeller.domain.data.attributes.LabelVersion;
 
 /**
  *
  * @author ador
  */
-public class UpdateLabel {
+public class UpdateLabel extends DomainObject {
 
     private final LabelId id;
     private final LabelDescription description;
@@ -18,19 +19,23 @@ public class UpdateLabel {
     private final LabelClassifierData classifierData;
     private final LabelTechnical technical;
     private final LabelId parent;
+    private final LabelVersion version;
 
-    public UpdateLabel(LabelId id, 
-            LabelName name, 
-            LabelDescription description, 
-            LabelClassifierData classifierData, 
+    public UpdateLabel(LabelId id,
+            LabelName name,
+            LabelDescription description,
+            LabelClassifierData classifierData,
             LabelTechnical technical,
-            LabelId parent) {
+            LabelId parent,
+            LabelVersion version) {
+        notNull(id, name, technical, version);
         this.id = id;
         this.description = description;
         this.name = name;
         this.classifierData = classifierData;
         this.technical = technical;
         this.parent = parent;
+        this.version = version;
     }
 
     public LabelId getId() {
@@ -55,6 +60,10 @@ public class UpdateLabel {
 
     public LabelId getParent() {
         return parent;
+    }
+
+    public LabelVersion getVersion() {
+        return version;
     }
 
 }

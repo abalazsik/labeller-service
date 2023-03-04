@@ -1,0 +1,1 @@
+MATCH (l:LLABEL) SET l.version = 1);

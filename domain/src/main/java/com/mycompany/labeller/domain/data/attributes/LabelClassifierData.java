@@ -6,19 +6,13 @@ import com.mycompany.labeller.domain.exceptions.LabellerException;
  *
  * @author ador
  */
-public class LabelClassifierData {
-
-    private final String value;
+public class LabelClassifierData extends NullableStringAttribute {
 
     public LabelClassifierData(String value) {
+        super(value);
         if (value != null) {
-            checkFormat(value);
+            checkFormat(value); // should be before the super call, but you can't do that in JAVA 
         }
-        this.value = value;
-    }
-
-    public String getValue() {
-        return value;
     }
 
     private static void checkFormat(String text) {

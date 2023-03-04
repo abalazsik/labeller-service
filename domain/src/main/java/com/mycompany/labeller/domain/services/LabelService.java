@@ -2,6 +2,7 @@ package com.mycompany.labeller.domain.services;
 
 import com.mycompany.labeller.domain.data.CreateLabel;
 import com.mycompany.labeller.domain.data.CreateLabelWithDate;
+import com.mycompany.labeller.domain.data.attributes.GetLabelsForString;
 import com.mycompany.labeller.domain.data.Label;
 import com.mycompany.labeller.domain.data.LabelRange;
 import com.mycompany.labeller.domain.data.UpdateLabel;
@@ -9,6 +10,7 @@ import com.mycompany.labeller.domain.data.UpdateLabelWithDate;
 import com.mycompany.labeller.domain.data.attributes.LabelCreationDate;
 import com.mycompany.labeller.domain.data.attributes.LabelId;
 import com.mycompany.labeller.domain.data.attributes.LabelUpdateDate;
+import com.mycompany.labeller.domain.data.attributes.LabelVersion;
 import com.mycompany.labeller.domain.exceptions.AccessRightException;
 import com.mycompany.labeller.domain.exceptions.LabellerException;
 import com.mycompany.labeller.domain.repository.LabelRepository;
@@ -36,10 +38,10 @@ public class LabelService {
         return repository.getAll(range).map(label -> audit(label, user));
     }
 
-    @Deprecated
-    public Stream<Label> getClassified(IUser user) {
-        checkRight(Rights.LabelGetClassified, user);
-        return repository.getClassifiableLabels().map(label -> audit(label, user));
+    public Stream<Label> getLabelsForString(GetLabelsForString text, IUser user) {
+        Stream<Label> labels = getClassified(user);
+
+        return labels.filter(label -> LabelMatcherUtil.matches(text.getValue(), label.getClassifierData()));
     }
 
     public LabelId create(CreateLabel createLabel, IUser user) {
@@ -50,14 +52,15 @@ public class LabelService {
         }
 
         checkParent(createLabel.getParent());
-        
+
         return repository.create(new CreateLabelWithDate(
                 createLabel.getName(),
                 createLabel.getDescription(),
                 createLabel.getClassifierData(),
                 createLabel.getTechnical(),
                 createLabel.getParent(),
-                new LabelCreationDate(timeSource.now())));
+                new LabelCreationDate(timeSource.now()),
+                new LabelVersion(1L)));
     }
 
     public void delete(LabelId id, IUser user) {
@@ -83,18 +86,24 @@ public class LabelService {
         return repository.getById(id).map(label -> audit(label, user));
     }
 
-    public void update(UpdateLabel update, IUser user) {
+    public synchronized LabelVersion update(UpdateLabel update, IUser user) {
         checkRight(Rights.LabelUpdate, user);
 
-        if (repository.getById(update.getId()).isEmpty()) {
+        Optional<Label> optional = repository.getById(update.getId());
+
+        if (optional.isEmpty()) {
             throw new LabellerException("Label does not exists!");
+        }
+
+        if (!optional.get().getVersion().equals(update.getVersion())) {
+            throw new LabellerException("Version not up-to-date!");
         }
 
         Optional<Label> byName = repository.getByName(update.getName());
         if (byName.isPresent() && !byName.get().getId().equals(update.getId())) {
             throw new LabellerException("Name taken");
         }
-        
+
         checkParent(update.getParent());
 
         UpdateLabelWithDate updateLabelWithDate = new UpdateLabelWithDate(
@@ -104,9 +113,10 @@ public class LabelService {
                 update.getClassifierData(),
                 update.getTechnical(),
                 update.getParent(),
-                new LabelUpdateDate(timeSource.now()));
+                new LabelUpdateDate(timeSource.now()),
+                update.getVersion());
 
-        repository.update(updateLabelWithDate);
+        return repository.update(updateLabelWithDate);
     }
 
     private void checkRight(String right, IUser user) {
@@ -131,7 +141,8 @@ public class LabelService {
                 label.getTechnical(),
                 label.getParent(),
                 creationDate,
-                updateDate);
+                updateDate,
+                label.getVersion());
     }
 
     private void checkParent(LabelId parentId) {
@@ -143,6 +154,11 @@ public class LabelService {
                 throw new LabellerException("Parent does not exist!");
             }
         }
+    }
+
+    private Stream<Label> getClassified(IUser user) {
+        checkRight(Rights.LabelGetClassified, user);
+        return repository.getClassifiableLabels().map(label -> audit(label, user));
     }
 
 }

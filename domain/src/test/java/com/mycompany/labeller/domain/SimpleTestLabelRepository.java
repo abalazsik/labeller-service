@@ -6,6 +6,7 @@ import com.mycompany.labeller.domain.data.LabelRange;
 import com.mycompany.labeller.domain.data.UpdateLabelWithDate;
 import com.mycompany.labeller.domain.data.attributes.LabelId;
 import com.mycompany.labeller.domain.data.attributes.LabelName;
+import com.mycompany.labeller.domain.data.attributes.LabelVersion;
 import com.mycompany.labeller.domain.repository.LabelRepository;
 import java.util.ArrayList;
 import java.util.List;
@@ -79,7 +80,7 @@ public class SimpleTestLabelRepository implements LabelRepository {
     }
 
     @Override
-    public void update(UpdateLabelWithDate update) {
+    public LabelVersion update(UpdateLabelWithDate update) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 

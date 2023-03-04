@@ -16,6 +16,7 @@ import io.cucumber.java.en.When;
 import static com.mycompany.labeller.domain.Constants.*;
 import com.mycompany.labeller.domain.data.Label;
 import com.mycompany.labeller.domain.data.UpdateLabel;
+import com.mycompany.labeller.domain.data.attributes.LabelVersion;
 import com.mycompany.labeller.domain.exceptions.AccessRightException;
 import com.mycompany.labeller.domain.exceptions.LabellerException;
 import java.util.Optional;
@@ -30,6 +31,7 @@ public class LabelServiceCucumberTestDefs {
     private IUser user;
     private LabelRepository repository;
     private LabelId actualId;
+    private LabelVersion version;
     private Exception exception = null;
     private Optional<Label> requestedLabel;
 
@@ -62,18 +64,21 @@ public class LabelServiceCucumberTestDefs {
     public void initialized_repository() {
         repository = new CRUDTestLabelRepository();
         actualId = new LabelService(repository, TEST_TIME_SOURCE).create(createTestLabel(false), admin);
+        version = new LabelVersion(1L);
     }
 
     @Given("An initialized repository with label {string}")
     public void initialized_repository_with_name(String name) {
         repository = new CRUDTestLabelRepository();
         actualId = new LabelService(repository, TEST_TIME_SOURCE).create(createTestLabel(name, false), admin);
+        version = new LabelVersion(1L);
     }
 
     @When("Creating a technical label")
     public void creating_technical_label() {
         try {
             actualId = new LabelService(repository, TEST_TIME_SOURCE).create(createTestLabel(true), user);
+            version = new LabelVersion(1L);
         } catch (Exception e) {
             exception = e;
         }
@@ -83,6 +88,7 @@ public class LabelServiceCucumberTestDefs {
     public void creating_label_with_name(String name) {
         try {
             actualId = new LabelService(repository, TEST_TIME_SOURCE).create(createTestLabel(name, true), user);
+            version = new LabelVersion(1L);
         } catch (Exception e) {
             exception = e;
         }
@@ -92,6 +98,7 @@ public class LabelServiceCucumberTestDefs {
     public void creating_non_technical_label() {
         try {
             actualId = new LabelService(repository, TEST_TIME_SOURCE).create(createTestLabel(false), user);
+            version = new LabelVersion(1L);
         } catch (Exception e) {
             exception = e;
         }
@@ -113,6 +120,12 @@ public class LabelServiceCucumberTestDefs {
         } catch (Exception e) {
             exception = e;
         }
+    }
+
+    @When("Using non-existing id")
+    public void non_existing_id() {
+        actualId = new LabelId(99);
+        version = new LabelVersion(1L);
     }
 
     @Then("Returns an id")
@@ -153,7 +166,7 @@ public class LabelServiceCucumberTestDefs {
     public void no_exception_thrown() {
         assertThat(exception).isNull();
     }
-    
+
     @Then("Label has name {string}")
     public void label_has_name(String name) {
         assertThat(requestedLabel.get().getName().getValue()).isEqualTo(name);
@@ -173,7 +186,7 @@ public class LabelServiceCucumberTestDefs {
     private UpdateLabel updateTestLabel(String name) {
         return new UpdateLabel(actualId, new LabelName(name),
                 new LabelDescription("description"), null,
-                LabelTechnical.TRUE, null);
+                LabelTechnical.TRUE, null, version);
     }
 
 }

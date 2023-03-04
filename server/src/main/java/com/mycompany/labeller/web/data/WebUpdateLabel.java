@@ -1,4 +1,4 @@
-package com.mycompany.labeller.web;
+package com.mycompany.labeller.web.data;
 
 /**
  *
@@ -11,6 +11,7 @@ public class WebUpdateLabel {
     private String classifierData;
     private boolean technical;
     private Long parent;
+    private long version;
 
     public String getDescription() {
         return description;
@@ -50,6 +51,14 @@ public class WebUpdateLabel {
 
     public void setParent(Long parent) {
         this.parent = parent;
+    }
+
+    public long getVersion() {
+        return version;
+    }
+
+    public void setVersion(long version) {
+        this.version = version;
     }
     
 }

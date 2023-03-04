@@ -10,7 +10,7 @@ import com.mycompany.labeller.domain.data.attributes.LabelTechnical;
  *
  * @author ador
  */
-public class CreateLabel {
+public class CreateLabel extends DomainObject {
 
     private final LabelName name;
     private final LabelDescription description;
@@ -21,6 +21,7 @@ public class CreateLabel {
     public CreateLabel(LabelName name, LabelDescription description, 
             LabelClassifierData classifierData, LabelTechnical technical,
             LabelId parent) {
+        notNull(name, technical);
         this.name = name;
         this.description = description;
         this.classifierData = classifierData;

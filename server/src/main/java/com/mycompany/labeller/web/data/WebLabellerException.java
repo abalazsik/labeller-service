@@ -1,5 +1,5 @@
 
-package com.mycompany.labeller.web;
+package com.mycompany.labeller.web.data;
 
 /**
  *

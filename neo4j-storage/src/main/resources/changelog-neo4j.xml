@@ -13,5 +13,6 @@
         <sqlFile path="cql/2_classifier_data.sql" />
         <sqlFile path="cql/3_relations.sql" />
         <sqlFile path="cql/4_dates.sql" />
+        <sqlFile path="cql/5_version.sql" />
     </changeSet>
 </databaseChangeLog>

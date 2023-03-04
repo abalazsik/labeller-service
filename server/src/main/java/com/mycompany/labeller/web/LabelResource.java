@@ -1,9 +1,12 @@
 package com.mycompany.labeller.web;
 
+import com.mycompany.labeller.web.data.WebLabellerException;
+import com.mycompany.labeller.web.data.WebUpdateLabel;
+import com.mycompany.labeller.web.data.WebLabel;
+import com.mycompany.labeller.web.data.WebCreateLabel;
 import com.mycompany.labeller.commons.CachedLabelId;
 import com.mycompany.labeller.commons.roles.Roles;
 import com.mycompany.labeller.domain.services.LabelService;
-import com.mycompany.labeller.domain.data.CreateLabel;
 import com.mycompany.labeller.domain.data.Label;
 import com.mycompany.labeller.domain.data.LabelRange;
 import com.mycompany.labeller.domain.data.UpdateLabel;
@@ -11,7 +14,11 @@ import com.mycompany.labeller.domain.data.attributes.LabelClassifierData;
 import com.mycompany.labeller.domain.data.attributes.LabelDescription;
 import com.mycompany.labeller.domain.data.attributes.LabelName;
 import com.mycompany.labeller.domain.data.attributes.LabelTechnical;
+import com.mycompany.labeller.domain.data.attributes.LabelVersion;
 import com.mycompany.labeller.domain.exceptions.LabellerException;
+import com.mycompany.labeller.web.data.WebGetLabelsForString;
+import com.mycompany.labeller.web.data.WebLabelInfo;
+import com.mycompany.labeller.web.mapper.WebLabelMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import java.util.List;
 import java.util.Optional;
@@ -49,7 +56,7 @@ public class LabelResource {
     public ResponseEntity<WebLabel> getById(@PathParam("id") Long id) {
         Optional<Label> label = labelService.getById(CachedLabelId.of(id), Roles.Admin);
         if (label.isPresent()) {
-            return ResponseEntity.ok(fromDomain(label.get()));
+            return ResponseEntity.ok(WebLabelMapper.fromDomain(label.get()));
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -57,22 +64,17 @@ public class LabelResource {
 
     @Operation(description = "List all labels")
     @GetMapping(path = "/all")
-    public List<WebLabel> all(
+    public List<WebLabelInfo> all(
             @RequestParam(name = "from", required = false, defaultValue = "0") int from,
             @RequestParam(name = "limit", required = false, defaultValue = "10") int limit) {
         return labelService.getAll(new LabelRange(from, limit), Roles.Admin)
-                .map(this::fromDomain).collect(Collectors.toList());
-    }
-
-    @GetMapping(path = "/classified")
-    public List<WebLabel> classified() {
-        return labelService.getClassified(Roles.Admin).map(this::fromDomain).collect(Collectors.toList());
+                .map(WebLabelMapper::toInfo).collect(Collectors.toList());
     }
 
     @Operation(description = "Create new label")
     @PostMapping
     public Long create(WebCreateLabel createLabel) {
-        return labelService.create(toDomainCreate(createLabel), Roles.Admin).getValue();
+        return labelService.create(WebLabelMapper.toDomainCreate(createLabel), Roles.Admin).getValue();
     }
 
     @Operation(description = "Update a label")
@@ -84,7 +86,8 @@ public class LabelResource {
                         new LabelDescription(updateLabel.getDescription()),
                         new LabelClassifierData(updateLabel.getClassifierData()),
                         LabelTechnical.of(updateLabel.isTechnical()),
-                        CachedLabelId.of(updateLabel.getParent())
+                        CachedLabelId.of(updateLabel.getParent()),
+                        new LabelVersion(updateLabel.getVersion())
                 ),
                 Roles.Admin);
     }
@@ -100,9 +103,14 @@ public class LabelResource {
             labelExporter.exportAll(httpServletResponse.getOutputStream());
             httpServletResponse.setStatus(200);
         } catch (Exception e) {
-            e.printStackTrace();
             httpServletResponse.setStatus(500);
         }
+    }
+
+    @PostMapping(path = "/forString")
+    public List<WebLabel> getLabelsForString(WebGetLabelsForString text) {
+        return labelService.getLabelsForString(WebLabelMapper.toDomainGetLabelsForString(text), Roles.Admin)
+                .map(WebLabelMapper::fromDomain).collect(Collectors.toList());
     }
 
     @ExceptionHandler(LabellerException.class)
@@ -113,22 +121,4 @@ public class LabelResource {
                 .body(new WebLabellerException(ex.getMessage()));
     }
 
-    private WebLabel fromDomain(Label label) {
-        return new WebLabel(label.getId().getValue(),
-                label.getName().getValue(),
-                label.getDescription().getValue(),
-                label.getClassifierData().getValue(),
-                label.getTechnical().value(),
-                label.getCreationDate().getValue());
-    }
-
-    private CreateLabel toDomainCreate(WebCreateLabel webCreateLabel) {
-        return new CreateLabel(
-                new LabelName(webCreateLabel.getName()),
-                new LabelDescription(webCreateLabel.getDescription()),
-                new LabelClassifierData(webCreateLabel.getClassifierData()),
-                LabelTechnical.of(webCreateLabel.isTechnical()),
-                CachedLabelId.of(webCreateLabel.getParent())
-        );
-    }
 }

@@ -11,6 +11,8 @@ import com.mycompany.labeller.domain.data.attributes.LabelId;
 import com.mycompany.labeller.domain.data.attributes.LabelName;
 import com.mycompany.labeller.domain.data.attributes.LabelTechnical;
 import com.mycompany.labeller.domain.data.attributes.LabelUpdateDate;
+import com.mycompany.labeller.domain.data.attributes.LabelVersion;
+import com.mycompany.labeller.domain.data.attributes.NullableStringAttribute;
 import com.mycompany.labeller.domain.repository.LabelRepository;
 import com.mycompany.labeller.h2.H2Label;
 import com.mycompany.labeller.h2.repository.H2LabelRepostitory;
@@ -46,12 +48,13 @@ public class H2LabelStorage implements LabelRepository {
         H2Label h2Label = new H2Label(
                 null,
                 createLabel.getName().getValue(),
-                createLabel.getDescription().getValue(),
-                createLabel.getClassifierData().getValue(),
+                NullableStringAttribute.getValue(createLabel.getDescription()),
+                NullableStringAttribute.getValue(createLabel.getClassifierData()),
                 createLabel.getTechnical().value(),
                 null,
-                createLabel.getCreationTime().getValue(),
-                createLabel.getCreationTime().getValue()
+                LabelCreationDate.getValue(createLabel.getCreationTime()),
+                LabelUpdateDate.getValue(createLabel.getCreationTime()),
+                createLabel.getVersion().getValue()
         );
 
         h2Label = repository.save(h2Label);
@@ -75,18 +78,22 @@ public class H2LabelStorage implements LabelRepository {
     }
 
     @Override
-    public void update(UpdateLabelWithDate update) {
-        
-        Long parent = update.getParent() == null? null : update.getParent().getValue();
-        
-        repository.update(
-                update.getId().getValue(),
-                update.getDescription().getValue(),
+    public LabelVersion update(UpdateLabelWithDate update) {
+
+        H2Label h2Label = new H2Label(
+                update.getId(),
                 update.getName().getValue(),
-                update.getClassifierData().getValue(),
+                NullableStringAttribute.getValue(update.getDescription()),
+                NullableStringAttribute.getValue(update.getClassifierData()),
                 update.getTechnical().value(),
-                update.getUpdateDate().getValue(),
-                parent);
+                update.getParent(),
+                repository.getCreateDate(update.getId().getValue()),
+                LabelUpdateDate.getValue(update.getUpdateDate()),
+                update.getVersion().getValue());
+
+        repository.save(h2Label);
+
+        return update.getVersion();
     }
 
     @Override
@@ -102,7 +109,8 @@ public class H2LabelStorage implements LabelRepository {
                 LabelTechnical.of(h2Label.isTechnical()),
                 h2Label.getParent(),
                 new LabelCreationDate(h2Label.getCreationDate()),
-                new LabelUpdateDate(h2Label.getUpdateDate())
+                new LabelUpdateDate(h2Label.getUpdateDate()),
+                new LabelVersion(h2Label.getVersion())
         );
     }
 

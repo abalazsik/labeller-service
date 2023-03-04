@@ -6,6 +6,7 @@ CREATE TABLE public.llabel (
 	classifier_data varchar(200) NULL,
 	technical bool NOT NULL DEFAULT false,
 	parent int8 NULL,
+        version int8 DEFAULT 1,
 	CONSTRAINT llabel_pkey PRIMARY KEY (id),
 	CONSTRAINT name_unique UNIQUE (name),
 	CONSTRAINT llabel_parent_fkey FOREIGN KEY (parent) REFERENCES public.llabel(id)

@@ -22,7 +22,8 @@ public class H2LabelRowMapper implements RowMapper<H2Label> {
                 rs.getBoolean(H2Label.TECHNICAL),
                 CachedLabelId.of(rs.getLong(H2Label.PARENT)),
                 rs.getTimestamp(H2Label.CREATION_DATE).toLocalDateTime(),
-                rs.getTimestamp(H2Label.UPDATE_DATE).toLocalDateTime()
+                rs.getTimestamp(H2Label.UPDATE_DATE).toLocalDateTime(),
+                rs.getLong(H2Label.VERSION)
         );
     }
 

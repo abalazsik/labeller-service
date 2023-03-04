@@ -4,21 +4,15 @@ package com.mycompany.labeller.domain.data.attributes;
  *
  * @author ador
  */
-public class LabelDescription {
-
-    private final String value;
-
+public class LabelDescription extends NullableStringAttribute {
+    
     public LabelDescription(String value) {
-        this.value = value;
-    }
-
-    public String getValue() {
-        return value;
+        super(value);
     }
 
     @Override
     public String toString() {
-        return "LabelDescription{" + "value=" + value + '}';
+        return "LabelDescription{" + "value=" + getValue(this) + '}';
     }
     
 }

@@ -7,6 +7,7 @@ import com.mycompany.labeller.domain.data.LabelRange;
 import com.mycompany.labeller.domain.data.UpdateLabelWithDate;
 import com.mycompany.labeller.domain.data.attributes.LabelId;
 import com.mycompany.labeller.domain.data.attributes.LabelName;
+import com.mycompany.labeller.domain.data.attributes.LabelVersion;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -23,6 +24,6 @@ public interface LabelRepository {
     public void unlink(LabelId id);
     public Optional<Label> getById(LabelId id);
     public Optional<Label> getByName(LabelName name);
-    public void update(UpdateLabelWithDate update);
+    public LabelVersion update(UpdateLabelWithDate update);
     
 }

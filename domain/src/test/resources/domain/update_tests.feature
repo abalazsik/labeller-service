@@ -26,6 +26,7 @@ Feature: Update label
     Scenario: Admin can not update non-existing label
         Given An empty repository
         Given User is admin
+        When Using non-existing id
         When Updating the label to name "name2"
         Then Throws Labeller exception with message "Label does not exists!"
 

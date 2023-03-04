@@ -6,6 +6,7 @@ import com.mycompany.labeller.domain.data.attributes.LabelId;
 import com.mycompany.labeller.domain.data.attributes.LabelName;
 import com.mycompany.labeller.domain.data.attributes.LabelTechnical;
 import com.mycompany.labeller.domain.data.attributes.LabelUpdateDate;
+import com.mycompany.labeller.domain.data.attributes.LabelVersion;
 
 /**
  *
@@ -17,8 +18,9 @@ public class UpdateLabelWithDate extends UpdateLabel {
 
     public UpdateLabelWithDate(LabelId id, LabelName name,
             LabelDescription description, LabelClassifierData classifierData,
-            LabelTechnical technical, LabelId parent, LabelUpdateDate updateDate) {
-        super(id, name, description, classifierData, technical, parent);
+            LabelTechnical technical, LabelId parent, LabelUpdateDate updateDate, LabelVersion version) {
+        super(id, name, description, classifierData, technical, parent, version);
+        notNull(updateDate);
         this.updateDate = updateDate;
     }
 

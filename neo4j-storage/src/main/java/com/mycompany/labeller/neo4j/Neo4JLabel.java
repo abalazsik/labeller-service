@@ -37,6 +37,9 @@ public class Neo4JLabel implements Serializable {
     @Property("update_date")
     private LocalDateTime updateDate;
     
+    @Property("version")
+    private long version;
+    
     @Relationship(type = "DIRECTED", direction = Relationship.Direction.OUTGOING)
     private Neo4JLabel childOf;
 
@@ -102,6 +105,14 @@ public class Neo4JLabel implements Serializable {
 
     public void setUpdateDate(LocalDateTime updateDate) {
         this.updateDate = updateDate;
+    }
+
+    public long getVersion() {
+        return version;
+    }
+
+    public void setVersion(long version) {
+        this.version = version;
     }
     
 }

@@ -15,6 +15,7 @@ import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.*;
 import static com.mycompany.labeller.domain.Constants.*;
+import com.mycompany.labeller.domain.data.attributes.LabelVersion;
 
 /**
  *
@@ -112,7 +113,8 @@ public class GetLabelTest {
                 new LabelClassifierData(null),
                 LabelTechnical.FALSE, null,
                 creationDate,
-                updateDate);
+                updateDate,
+                new LabelVersion(1));
     }
 
 }
