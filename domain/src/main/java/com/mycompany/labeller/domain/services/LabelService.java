@@ -65,7 +65,7 @@ public class LabelService {
 
     public void delete(LabelId id, IUser user) {
         checkRight(Rights.LabelDelete, user);
-        Optional<Label> optional = repository.getById(id);
+        Optional<Label> optional = repository.getById(id);// maybe call through the LabelService
 
         if (optional.isEmpty()) {
             throw new LabellerException("Label does not exists!");
