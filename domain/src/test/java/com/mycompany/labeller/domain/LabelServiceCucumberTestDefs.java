@@ -16,10 +16,14 @@ import io.cucumber.java.en.When;
 import static com.mycompany.labeller.domain.Constants.*;
 import com.mycompany.labeller.domain.data.Label;
 import com.mycompany.labeller.domain.data.UpdateLabel;
+import com.mycompany.labeller.domain.data.attributes.GetLabelsForString;
 import com.mycompany.labeller.domain.data.attributes.LabelVersion;
 import com.mycompany.labeller.domain.exceptions.AccessRightException;
 import com.mycompany.labeller.domain.exceptions.LabellerException;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import static org.assertj.core.api.Assertions.*;
 
 /**
@@ -34,6 +38,7 @@ public class LabelServiceCucumberTestDefs {
     private LabelVersion version;
     private Exception exception = null;
     private Optional<Label> requestedLabel;
+    private List<Label> labels;
 
     @Given("User is admin")
     public void user_is_admin() {
@@ -72,6 +77,53 @@ public class LabelServiceCucumberTestDefs {
         repository = new CRUDTestLabelRepository();
         actualId = new LabelService(repository, TEST_TIME_SOURCE).create(createTestLabel(name, false), admin);
         version = new LabelVersion(1L);
+    }
+
+    private static final String NAME_PROP = "name";
+    private static final String CLASSIFIER_DATA_PROP = "classifier_data";
+    private static final String NULL = "[NULL]";
+
+    @Given("A preloaded repository with:")
+    public void preloaded_repository(List<Map<String, String>> datatable) {
+        repository = new CRUDTestLabelRepository();
+        LabelService service = new LabelService(repository, TEST_TIME_SOURCE);
+        for (Map<String, String> row : datatable) {
+            LabelClassifierData classifierData
+                    = NULL.equals(row.get(CLASSIFIER_DATA_PROP))
+                    ? null : new LabelClassifierData(row.get(CLASSIFIER_DATA_PROP));
+
+            actualId = service.create(new CreateLabel(
+                    new LabelName(row.get(NAME_PROP)),
+                    null,
+                    classifierData,
+                    LabelTechnical.FALSE,
+                    null
+            ), admin);
+        }
+    }
+
+    @When("Getting labels for the text {string}")
+    public void get_labels_for_text(String text) {
+        System.out.println("get_labels_for_text was called!");
+        try {
+            labels = new LabelService(repository, TEST_TIME_SOURCE)
+                    .getLabelsForString(new GetLabelsForString(text), user)
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            exception = e;
+        }
+    }
+
+    @Then("Selects label {string}")
+    public void selects_label(String name) {
+        assertThat(labels)
+                .anyMatch(label -> name.equals(label.getName().getValue()));
+    }
+    
+    @Then("Does not select label {string}")
+    public void not_selects_label(String name) {
+        assertThat(labels)
+                .noneMatch(label -> name.equals(label.getName().getValue()));
     }
 
     @When("Creating a technical label")

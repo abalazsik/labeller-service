@@ -8,7 +8,6 @@ import com.mycompany.labeller.domain.data.attributes.LabelTechnical;
 import com.mycompany.labeller.domain.exceptions.AccessRightException;
 import com.mycompany.labeller.domain.exceptions.LabellerException;
 import com.mycompany.labeller.domain.services.LabelService;
-import java.time.LocalDateTime;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.*;
 import static com.mycompany.labeller.domain.Constants.*;
