@@ -7,15 +7,15 @@ import java.util.HashSet;
  *
  * @author ador
  */
-public class Role implements IUser {
+public class LabellerRole implements IUser {
 
     private final HashSet<String> rights;
 
-    public Role(HashSet<String> rights) {
+    public LabellerRole(HashSet<String> rights) {
         this.rights = rights;
     }
 
-    public Role(String... rights) {
+    public LabellerRole(String... rights) {
         this.rights = new HashSet<>();
         for (String right : rights) {
             this.rights.add(right);

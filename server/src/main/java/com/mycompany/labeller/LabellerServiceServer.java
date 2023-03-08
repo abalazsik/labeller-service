@@ -16,6 +16,7 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan({
     "com.mycompany.labeller.web",
     "com.mycompany.labeller.config",
+    "com.mycompany.labeller.security",
     "com.mycompany.labeller.jmx",
     "com.mycompany.labeller"
 })
