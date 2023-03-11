@@ -9,9 +9,10 @@
     <modules>
     	<module>domain</module>
         <module>commons</module>
-    	<module>server</module>
+        <module>labeller-grpc-intf</module>
         <module>h2-storage</module>
         <module>neo4j-storage</module>
+        <module>server</module>
     </modules>
     
     <properties>

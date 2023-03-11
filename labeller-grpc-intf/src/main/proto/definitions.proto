@@ -1,0 +1,85 @@
+syntax = "proto3";
+option java_multiple_files = true;
+package com.mycompany.labeller.grcp;
+
+message GetAllLabelsRequest {
+    uint64 from = 1;
+    uint64 limit = 2;
+}
+
+message GetAllLabelsResponse {
+    repeated Label labels = 1;
+}
+
+message Label {
+    uint64 id = 1;
+    string name = 2;
+    string description = 3;
+    string classifierData = 4;
+    string technical = 5;
+    string parent = 6;
+    
+    uint32 creationDate = 7;
+    uint32 updateDate = 8;
+    uint64 version = 9;
+}
+
+message GetLabelsForStringRequest {
+    string text = 1;
+}
+
+message GetLabelsForStringResponse {
+    repeated Label labels = 1;
+}
+
+message CreateLabelRequest {
+    string name = 1;
+    string description = 2;
+    string classifierData = 3;
+    bool technical = 4;
+    uint64 parent = 5;
+}
+
+message CreateLabelResponse {
+    uint64 id = 1;
+}
+
+message DeleteLabelRequest {
+    uint64 id = 1;
+}
+
+message DeleteLabelResponse {
+}
+
+message GetLabelByIdRequest {
+    uint64 id = 1;
+}
+
+message GetLabelByIdResponse {
+    Label result = 1;
+}
+
+message UpdateLabelRequest {
+    uint64 id = 1;
+    string name = 2;
+    string description = 3;
+    string classifierData = 4;
+    bool technical = 5;
+    uint64 parent = 6;
+    
+    uint64 version = 7;
+}
+
+message UpdateLabelResponse {
+    uint64 version = 1;
+}
+
+service LabellerService {
+    rpc getAll(GetAllLabelsRequest) returns (GetAllLabelsResponse);
+    rpc getById(GetLabelByIdRequest) returns (GetLabelByIdResponse);
+    rpc getLabelsForString(GetLabelsForStringRequest) returns (GetLabelsForStringResponse);
+    rpc createLabel(CreateLabelRequest) returns (CreateLabelResponse);
+    rpc deleteLabel(DeleteLabelRequest) returns (DeleteLabelResponse);
+    rpc getLabelById(GetLabelByIdRequest) returns (GetLabelByIdResponse);
+    rpc updateLabel(UpdateLabelRequest) returns (UpdateLabelResponse);
+}
