@@ -2,6 +2,7 @@ package com.mycompany.labeller;
 
 import com.mycompany.labeller.domain.services.LabelService;
 import com.mycompany.labeller.h2.service.H2LabelStorage;
+import com.mycompany.labeller.service.grpc.port.LabellerGRCPServer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -40,5 +41,10 @@ public class LabellerServiceServer {
     @Bean
     public LabelService labelService() {
         return new LabelService(labelStorage, mainTimeSource);
+    }
+    
+    @Bean
+    public LabellerGRCPServer labellerGRCPServer(LabelService labelService) {
+        return new LabellerGRCPServer(labelService);
     }
 }

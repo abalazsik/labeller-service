@@ -15,8 +15,8 @@
     
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
         <openapi.version>1.6.9</openapi.version>
     </properties>
     
@@ -34,6 +34,11 @@
         <dependency>
             <groupId>com.mycompany</groupId>
             <artifactId>labeller-service-h2-storage</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.mycompany</groupId>
+            <artifactId>labeller-service-grpc-port</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <!--dependency>

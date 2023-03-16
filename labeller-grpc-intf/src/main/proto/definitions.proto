@@ -3,8 +3,8 @@ option java_multiple_files = true;
 package com.mycompany.labeller.grcp;
 
 message GetAllLabelsRequest {
-    uint64 from = 1;
-    uint64 limit = 2;
+    uint32 from = 1;
+    uint32 limit = 2;
 }
 
 message GetAllLabelsResponse {
@@ -16,8 +16,8 @@ message Label {
     string name = 2;
     string description = 3;
     string classifierData = 4;
-    string technical = 5;
-    string parent = 6;
+    bool technical = 5;
+    uint64 parent = 6;
     
     uint32 creationDate = 7;
     uint32 updateDate = 8;
@@ -76,7 +76,6 @@ message UpdateLabelResponse {
 
 service LabellerService {
     rpc getAll(GetAllLabelsRequest) returns (GetAllLabelsResponse);
-    rpc getById(GetLabelByIdRequest) returns (GetLabelByIdResponse);
     rpc getLabelsForString(GetLabelsForStringRequest) returns (GetLabelsForStringResponse);
     rpc createLabel(CreateLabelRequest) returns (CreateLabelResponse);
     rpc deleteLabel(DeleteLabelRequest) returns (DeleteLabelResponse);

@@ -1,4 +1,4 @@
-package com.mycompany.labeller.security;
+package com.mycompany.labeller.commons.security;
 
 import com.mycompany.labeller.commons.roles.Roles;
 import com.mycompany.labeller.domain.user.IUser;

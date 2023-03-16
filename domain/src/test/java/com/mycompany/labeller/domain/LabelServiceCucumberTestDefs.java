@@ -104,7 +104,6 @@ public class LabelServiceCucumberTestDefs {
 
     @When("Getting labels for the text {string}")
     public void get_labels_for_text(String text) {
-        System.out.println("get_labels_for_text was called!");
         try {
             labels = new LabelService(repository, TEST_TIME_SOURCE)
                     .getLabelsForString(new GetLabelsForString(text), user)

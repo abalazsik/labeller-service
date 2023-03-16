@@ -15,7 +15,7 @@ import com.mycompany.labeller.domain.data.attributes.LabelName;
 import com.mycompany.labeller.domain.data.attributes.LabelTechnical;
 import com.mycompany.labeller.domain.data.attributes.LabelVersion;
 import com.mycompany.labeller.domain.exceptions.LabellerException;
-import com.mycompany.labeller.security.SecurityUtil;
+import com.mycompany.labeller.commons.security.SecurityUtil;
 import com.mycompany.labeller.web.data.WebGetLabelsForString;
 import com.mycompany.labeller.web.data.WebLabelInfo;
 import com.mycompany.labeller.web.mapper.WebLabelMapper;

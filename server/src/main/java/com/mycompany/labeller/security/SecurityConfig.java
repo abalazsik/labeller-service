@@ -1,5 +1,6 @@
 package com.mycompany.labeller.security;
 
+import com.mycompany.labeller.commons.security.LabellerUser;
 import com.mycompany.labeller.commons.roles.Roles;
 import java.util.Arrays;
 import org.springframework.context.annotation.Bean;
