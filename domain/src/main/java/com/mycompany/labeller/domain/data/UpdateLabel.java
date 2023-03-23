@@ -6,6 +6,7 @@ import com.mycompany.labeller.domain.data.attributes.LabelId;
 import com.mycompany.labeller.domain.data.attributes.LabelName;
 import com.mycompany.labeller.domain.data.attributes.LabelTechnical;
 import com.mycompany.labeller.domain.data.attributes.LabelVersion;
+import org.jmolecules.ddd.annotation.Identity;
 
 /**
  *
@@ -13,6 +14,7 @@ import com.mycompany.labeller.domain.data.attributes.LabelVersion;
  */
 public class UpdateLabel extends DomainObject {
 
+    @Identity
     private final LabelId id;
     private final LabelDescription description;
     private final LabelName name;

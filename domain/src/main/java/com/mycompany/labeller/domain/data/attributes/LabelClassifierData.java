@@ -1,11 +1,13 @@
 package com.mycompany.labeller.domain.data.attributes;
 
 import com.mycompany.labeller.domain.exceptions.LabellerException;
+import org.jmolecules.ddd.annotation.ValueObject;
 
 /**
  *
  * @author ador
  */
+@ValueObject
 public class LabelClassifierData extends NullableStringAttribute {
 
     public LabelClassifierData(String value) {

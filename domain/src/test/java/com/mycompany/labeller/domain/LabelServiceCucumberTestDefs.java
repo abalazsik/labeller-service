@@ -16,7 +16,8 @@ import io.cucumber.java.en.When;
 import static com.mycompany.labeller.domain.Constants.*;
 import com.mycompany.labeller.domain.data.Label;
 import com.mycompany.labeller.domain.data.UpdateLabel;
-import com.mycompany.labeller.domain.data.attributes.GetLabelsForString;
+import com.mycompany.labeller.domain.data.GetLabelsForString;
+import com.mycompany.labeller.domain.data.attributes.GetLabelsForStringText;
 import com.mycompany.labeller.domain.data.attributes.LabelVersion;
 import com.mycompany.labeller.domain.exceptions.AccessRightException;
 import com.mycompany.labeller.domain.exceptions.LabellerException;
@@ -106,7 +107,7 @@ public class LabelServiceCucumberTestDefs {
     public void get_labels_for_text(String text) {
         try {
             labels = new LabelService(repository, TEST_TIME_SOURCE)
-                    .getLabelsForString(new GetLabelsForString(text), user)
+                    .getLabelsForString(new GetLabelsForString(new GetLabelsForStringText(text)), user)
                     .collect(Collectors.toList());
         } catch (Exception e) {
             exception = e;
@@ -118,7 +119,7 @@ public class LabelServiceCucumberTestDefs {
         assertThat(labels)
                 .anyMatch(label -> name.equals(label.getName().getValue()));
     }
-    
+
     @Then("Does not select label {string}")
     public void not_selects_label(String name) {
         assertThat(labels)

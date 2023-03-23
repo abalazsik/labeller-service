@@ -3,7 +3,8 @@ package com.mycompany.labeller.web.mapper;
 import com.mycompany.labeller.commons.CachedLabelId;
 import com.mycompany.labeller.domain.data.CreateLabel;
 import com.mycompany.labeller.domain.data.Label;
-import com.mycompany.labeller.domain.data.attributes.GetLabelsForString;
+import com.mycompany.labeller.domain.data.GetLabelsForString;
+import com.mycompany.labeller.domain.data.attributes.GetLabelsForStringText;
 import com.mycompany.labeller.domain.data.attributes.LabelClassifierData;
 import com.mycompany.labeller.domain.data.attributes.LabelDescription;
 import com.mycompany.labeller.domain.data.attributes.LabelName;
@@ -51,6 +52,6 @@ public class WebLabelMapper {
     }
 
     public static GetLabelsForString toDomainGetLabelsForString(WebGetLabelsForString text) {
-        return new GetLabelsForString(text.value);
+        return new GetLabelsForString(new GetLabelsForStringText(text.getValue()));
     }
 }

@@ -2,11 +2,13 @@
 package com.mycompany.labeller.domain.data.attributes;
 
 import java.util.Objects;
+import org.jmolecules.ddd.annotation.ValueObject;
 
 /**
  *
  * @author ador
  */
+@ValueObject
 public class LabelName extends DomainAttribute {
 
     private final String value;

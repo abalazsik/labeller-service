@@ -35,7 +35,9 @@ public class Neo4JLabelStorage implements LabelRepository {
     
     @Override
     public Stream<Label> getAll(LabelRange range) {
-        return repository.findAll(PageRequest.of(range.from / range.limit, range.limit)).stream().map(this::toDomain);
+        int from = range.getFrom().getValue();
+        int limit = range.getLimit().getValue();
+        return repository.findAll(PageRequest.of(from / limit, limit)).stream().map(this::toDomain);
     }
     
     @Override

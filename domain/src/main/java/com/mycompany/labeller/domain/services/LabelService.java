@@ -2,7 +2,7 @@ package com.mycompany.labeller.domain.services;
 
 import com.mycompany.labeller.domain.data.CreateLabel;
 import com.mycompany.labeller.domain.data.CreateLabelWithDate;
-import com.mycompany.labeller.domain.data.attributes.GetLabelsForString;
+import com.mycompany.labeller.domain.data.GetLabelsForString;
 import com.mycompany.labeller.domain.data.Label;
 import com.mycompany.labeller.domain.data.LabelRange;
 import com.mycompany.labeller.domain.data.UpdateLabel;
@@ -18,11 +18,13 @@ import com.mycompany.labeller.domain.user.IUser;
 import com.mycompany.labeller.domain.user.Rights;
 import java.util.Optional;
 import java.util.stream.Stream;
+import org.jmolecules.ddd.annotation.Service;
 
 /**
  *
  * @author ador
  */
+@Service
 public class LabelService {
 
     private final LabelRepository repository;
@@ -41,7 +43,8 @@ public class LabelService {
     public Stream<Label> getLabelsForString(GetLabelsForString text, IUser user) {
         Stream<Label> labels = getClassified(user);
 
-        return labels.filter(label -> LabelMatcherUtil.matches(text.getValue(), label.getClassifierData()));
+        return labels.filter(label -> LabelMatcherUtil.matches(
+                text.getValue().getValue(), label.getClassifierData()));
     }
 
     public LabelId create(CreateLabel createLabel, IUser user) {

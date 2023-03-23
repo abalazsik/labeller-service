@@ -9,13 +9,17 @@ import com.mycompany.labeller.domain.data.attributes.LabelTechnical;
 import com.mycompany.labeller.domain.data.attributes.LabelUpdateDate;
 import com.mycompany.labeller.domain.data.attributes.LabelVersion;
 import java.util.Objects;
+import org.jmolecules.ddd.annotation.Entity;
+import org.jmolecules.ddd.annotation.Identity;
 
 /**
  *
  * @author ador
  */
+@Entity
 public class Label extends DomainObject {
 
+    @Identity
     private final LabelId id;
     private final LabelName name;
     private final LabelDescription description;

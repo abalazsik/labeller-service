@@ -1,31 +1,29 @@
 package com.mycompany.labeller.domain.data;
 
+import com.mycompany.labeller.domain.data.attributes.LabelRangeFrom;
+import com.mycompany.labeller.domain.data.attributes.LabelRangeLimit;
+
 /**
  *
  * @author ador
  */
-public class LabelRange {
-
-    public final int from;
-    public final int limit;
-
-    public LabelRange(int from, int limit) {
-        if (from < 0) {
-            throw new IllegalArgumentException("from");
-        }
+public class LabelRange extends DomainObject {
+    
+    private final LabelRangeFrom from;
+    private final LabelRangeLimit limit;
+    
+    public LabelRange(LabelRangeFrom from, LabelRangeLimit limit) {
+        notNull(from, limit);
         this.from = from;
-        if (limit < 1) {
-            throw new IllegalArgumentException("limit");
-        }
         this.limit = limit;
     }
-
-    public int getFrom() {
+    
+    public LabelRangeFrom getFrom() {
         return from;
     }
-
-    public int getLimit() {
+    
+    public LabelRangeLimit getLimit() {
         return limit;
     }
-
+    
 }

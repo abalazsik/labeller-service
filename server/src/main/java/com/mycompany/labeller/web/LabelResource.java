@@ -16,6 +16,8 @@ import com.mycompany.labeller.domain.data.attributes.LabelTechnical;
 import com.mycompany.labeller.domain.data.attributes.LabelVersion;
 import com.mycompany.labeller.domain.exceptions.LabellerException;
 import com.mycompany.labeller.commons.security.SecurityUtil;
+import com.mycompany.labeller.domain.data.attributes.LabelRangeFrom;
+import com.mycompany.labeller.domain.data.attributes.LabelRangeLimit;
 import com.mycompany.labeller.web.data.WebGetLabelsForString;
 import com.mycompany.labeller.web.data.WebLabelInfo;
 import com.mycompany.labeller.web.mapper.WebLabelMapper;
@@ -67,7 +69,7 @@ public class LabelResource {
     public List<WebLabelInfo> all(
             @RequestParam(name = "from", required = false, defaultValue = "0") int from,
             @RequestParam(name = "limit", required = false, defaultValue = "10") int limit) {
-        return labelService.getAll(new LabelRange(from, limit), SecurityUtil.getUser())
+        return labelService.getAll(new LabelRange(new LabelRangeFrom(from), new LabelRangeLimit(limit)), SecurityUtil.getUser())
                 .map(WebLabelMapper::toInfo).collect(Collectors.toList());
     }
 

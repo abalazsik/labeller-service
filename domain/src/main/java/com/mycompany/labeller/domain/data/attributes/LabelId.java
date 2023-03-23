@@ -1,9 +1,12 @@
 package com.mycompany.labeller.domain.data.attributes;
 
+import org.jmolecules.ddd.annotation.ValueObject;
+
 /**
  *
  * @author ador
  */
+@ValueObject
 public class LabelId {
 
     private final long value;

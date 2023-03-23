@@ -34,7 +34,7 @@ public class H2LabelStorage implements LabelRepository {
 
     @Override
     public Stream<Label> getAll(LabelRange range) {
-        return repository.getAll(range.getFrom(), range.getLimit())
+        return repository.getAll(range.getFrom().getValue(), range.getLimit().getValue())
                 .map(this::toDomain);
     }
 

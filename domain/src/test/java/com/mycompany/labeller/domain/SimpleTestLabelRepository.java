@@ -30,7 +30,7 @@ public class SimpleTestLabelRepository implements LabelRepository {
 
     @Override
     public Stream<Label> getAll(LabelRange range) {
-        return labels.stream().skip(range.getFrom()).limit(range.getLimit());
+        return labels.stream().skip(range.getFrom().getValue()).limit(range.getLimit().getValue());
     }
 
     @Override

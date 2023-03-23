@@ -10,11 +10,13 @@ import com.mycompany.labeller.domain.data.attributes.LabelName;
 import com.mycompany.labeller.domain.data.attributes.LabelVersion;
 import java.util.Optional;
 import java.util.stream.Stream;
+import org.jmolecules.ddd.annotation.Repository;
 
 /**
  *
  * @author ador
  */
+@Repository
 public interface LabelRepository {
 
     public Stream<Label> getAll(LabelRange range);
