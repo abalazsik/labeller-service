@@ -1,6 +1,7 @@
 
 package com.mycompany.labeller.domain.data.attributes;
 
+import com.mycompany.labeller.domain.exceptions.LabellerException;
 import org.jmolecules.ddd.annotation.ValueObject;
 
 /**
@@ -13,7 +14,7 @@ public class LabelRangeLimit extends DomainAttribute {
 
     public LabelRangeLimit(int value) {
         if (value < 1) {
-            throw new IllegalArgumentException("limit must be greater than 0");
+            throw new LabellerException("limit must be greater than 0");
         }
         this.value = value;
     }

@@ -84,7 +84,6 @@ INSERT INTO public.llabel (id, name, classifier_data, technical) VALUES(88, 'rea
 INSERT INTO public.llabel (id, name, classifier_data, technical) VALUES(35, 'ci/cd', 'github gitlab jenkins pipeline', false);
 INSERT INTO public.llabel (id, name, classifier_data, technical) VALUES(83, 'vision', '"open cv"', false);
 INSERT INTO public.llabel (id, name, classifier_data, technical) VALUES(60, 'logging', 'logging log4j slf4j logback', false);
-INSERT INTO public.llabel (id, name, classifier_data, technical) VALUES(91, 'spring_export_2022_02', NULL, true);
 INSERT INTO public.llabel (id, name, classifier_data, technical) VALUES(63, 'matek', NULL, false);
 INSERT INTO public.llabel (id, name, classifier_data, technical) VALUES(39, 'spring', 'Spring', false);
 INSERT INTO public.llabel (id, name, classifier_data, technical) VALUES(73, 'protip', NULL, false);

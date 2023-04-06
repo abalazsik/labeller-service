@@ -11,8 +11,11 @@ import picocli.CommandLine;
 @CommandLine.Command
 public class LabellerJavafxClient implements Callable {
 
-    @CommandLine.Option(names = {"--url"}, description = "URL of the server")
-    private String serverUrl = "http://localhost:8080";
+    @CommandLine.Option(names = {"--host"}, description = "Server host. default: localhost")
+    private String host = "localhost";
+    
+    @CommandLine.Option(names = {"--port"}, description = "Server port. default: 10002")
+    private int port = 10002;
 
     @CommandLine.Option(names = {"--username", "-u"}, description = "Username to login with. If omitted, the anonymus role will be selected")
     private String username;

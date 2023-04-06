@@ -15,4 +15,3 @@ MATCH (a:LLABEL), (b:LLABEL) WHERE a.name="linux" AND b.name="unix" CREATE (a)-[
 MATCH (a:LLABEL), (b:LLABEL) WHERE a.name="sql" AND b.name="database" CREATE (a)-[r:child_of]->(b);
 MATCH (a:LLABEL), (b:LLABEL) WHERE a.name="postgres" AND b.name="database" CREATE (a)-[r:child_of]->(b);
 MATCH (a:LLABEL), (b:LLABEL) WHERE a.name="react" AND b.name="frontend" CREATE (a)-[r:child_of]->(b);
-MATCH (a:LLABEL), (b:LLABEL) WHERE a.name="spring_export_2022_02" AND b.name="spring" CREATE (a)-[r:child_of]->(b);

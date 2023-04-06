@@ -24,6 +24,7 @@ public interface H2LabelRepostitory extends CrudRepository<H2Label, Long> {
     @Query("SELECT * FROM LLabel ORDER BY name LIMIT :limit OFFSET :offset")
     public Stream<H2Label> getAll(@Param("offset") int offset, @Param("limit") int limit);
 
+    @Override
     public H2Label save(H2Label label);
 
     //@CacheEvict(CLASSIFYABLE)

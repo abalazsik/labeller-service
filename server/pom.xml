@@ -31,11 +31,7 @@
             <artifactId>labeller-service-commons</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-        <dependency>
-            <groupId>com.mycompany</groupId>
-            <artifactId>labeller-service-h2-storage</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
+        
         <dependency>
             <groupId>com.mycompany</groupId>
             <artifactId>labeller-service-grpc-port</artifactId>
@@ -43,9 +39,14 @@
         </dependency>
         <!--dependency>
             <groupId>com.mycompany</groupId>
-            <artifactId>labeller-service-neo4j-storage</artifactId>
+            <artifactId>labeller-service-h2-storage</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency-->
+        <dependency>
+            <groupId>com.mycompany</groupId>
+            <artifactId>labeller-service-neo4j-storage</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-autoconfigure</artifactId>

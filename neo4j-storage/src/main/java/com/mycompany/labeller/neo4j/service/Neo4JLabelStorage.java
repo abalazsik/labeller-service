@@ -108,13 +108,19 @@ public class Neo4JLabelStorage implements LabelRepository {
     }
     
     private Label toDomain(Neo4JLabel n4jl) {
+        LabelId parent = null;
+        
+        if (n4jl.getChildOf() != null) {
+            parent = CachedLabelId.of(n4jl.getChildOf().getId());
+        }
+        
         return new Label(
                 CachedLabelId.of(n4jl.getId()),
                 new LabelName(n4jl.getName()),
                 new LabelDescription(n4jl.getDescription()),
                 new LabelClassifierData(n4jl.getDescription()),
                 LabelTechnical.of(n4jl.isTechnical()),
-                CachedLabelId.of(n4jl.getChildOf().getId()),
+                parent,
                 new LabelCreationDate(n4jl.getCreationDate()),
                 new LabelUpdateDate(n4jl.getUpdateDate()),
                 new LabelVersion(n4jl.getVersion())

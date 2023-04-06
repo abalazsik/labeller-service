@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
  * @author ador
  */
 @Component
-public class MainTimeSource implements TimeSource {
+public class SystemTimeSource implements TimeSource {
 
     @Override
     public LocalDateTime now() {

@@ -1,5 +1,6 @@
 package com.mycompany.labeller.domain.data.attributes;
 
+import com.mycompany.labeller.domain.exceptions.LabellerException;
 import org.jmolecules.ddd.annotation.ValueObject;
 
 /**
@@ -11,6 +12,9 @@ public class LabelVersion extends DomainAttribute {
     private final long value;
 
     public LabelVersion(long value) {
+        if (value < 1) {
+            throw new LabellerException("version must be greater than 0!");
+        }
         this.value = value;
     }
 

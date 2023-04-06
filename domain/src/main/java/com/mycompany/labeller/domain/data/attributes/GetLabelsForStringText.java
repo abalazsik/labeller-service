@@ -1,5 +1,6 @@
 package com.mycompany.labeller.domain.data.attributes;
 
+import com.mycompany.labeller.domain.exceptions.LabellerException;
 import org.jmolecules.ddd.annotation.ValueObject;
 
 /**
@@ -14,7 +15,7 @@ public class GetLabelsForStringText extends DomainAttribute {
     public GetLabelsForStringText(String value) {
         notNull(value);
         if (value.isEmpty()) {
-            throw new IllegalArgumentException("GetLabelsForStringText cannot be empty!");
+            throw new LabellerException("GetLabelsForStringText cannot be empty!");
         }
         this.value = value;
     }

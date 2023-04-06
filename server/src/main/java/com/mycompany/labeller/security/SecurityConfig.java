@@ -8,11 +8,13 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.channel.ChannelProcessingFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -41,10 +43,23 @@ public class SecurityConfig {
         http.addFilterAfter(new CorsFilter(corsConfigurationSource()), ChannelProcessingFilter.class);
         http
                 .authorizeRequests()
-                .antMatchers("/api/labels/forString", "/swagger-ui/*", "/v3/api-docs/swagger-config", "/v3/api-docs").permitAll()
+                .antMatchers(
+                        "/api/labels/forString",
+                        "/api/labels/all",
+                        "/swagger-ui/*",
+                        "/v3/api-docs/swagger-config",
+                        "/v3/api-docs",
+                        "/h2/**")
+                .permitAll()
                 .and().authorizeRequests().anyRequest().authenticated().and()
                 .httpBasic();
         return http.build();
+    }
+
+    @Bean
+    WebSecurityCustomizer webSecurityCustomizer() {
+        return web -> web.ignoring()
+                .requestMatchers(new AntPathRequestMatcher("/h2/**"));
     }
 
     @Bean

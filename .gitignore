@@ -1,2 +1,3 @@
 target/
 nbactions.xml
+labeller-react-frontend/node_modules/*

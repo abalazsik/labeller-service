@@ -85,7 +85,6 @@ CREATE (l: LLABEL { name: "service-descriptor", technical: false });
 CREATE (l: LLABEL { name: "setup", technical: false });
 CREATE (l: LLABEL { name: "source-control", technical: false });
 CREATE (l: LLABEL { name: "spring", technical: false });
-CREATE (l: LLABEL { name: "spring_export_2022_02", technical: true });
 CREATE (l: LLABEL { name: "sql", technical: false });
 CREATE (l: LLABEL { name: "sysadmin", technical: false });
 CREATE (l: LLABEL { name: "tervezés", technical: false });

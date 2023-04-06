@@ -1,7 +1,7 @@
 package com.mycompany.labeller;
 
 import com.mycompany.labeller.domain.services.LabelService;
-import com.mycompany.labeller.h2.service.H2LabelStorage;
+import com.mycompany.labeller.neo4j.service.Neo4JLabelStorage;
 import com.mycompany.labeller.service.grpc.port.LabellerGRCPServer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -23,16 +23,16 @@ import org.springframework.context.annotation.ComponentScan;
 })
 public class LabellerServiceServer {
 
-    @Autowired
-    private H2LabelStorage labelStorage;    
-    
     /*
     @Autowired
-    private Neo4JLabelStorage labelStorage;
+    private H2LabelStorage labelStorage;    
     */
     
     @Autowired
-    private MainTimeSource mainTimeSource;
+    private Neo4JLabelStorage labelStorage;
+    
+    @Autowired
+    private SystemTimeSource mainTimeSource;
     
     public static void main(String[] args) {
         SpringApplication.run(LabellerServiceServer.class, args);
