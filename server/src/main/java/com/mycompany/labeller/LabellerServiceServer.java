@@ -2,7 +2,6 @@ package com.mycompany.labeller;
 
 import com.mycompany.labeller.domain.services.LabelService;
 import com.mycompany.labeller.neo4j.service.Neo4JLabelStorage;
-import com.mycompany.labeller.service.grpc.port.LabellerGRCPServer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -19,6 +18,7 @@ import org.springframework.context.annotation.ComponentScan;
     "com.mycompany.labeller.config",
     "com.mycompany.labeller.security",
     "com.mycompany.labeller.jmx",
+    "com.mycompany.labeller.grpc",
     "com.mycompany.labeller"
 })
 public class LabellerServiceServer {
@@ -42,9 +42,5 @@ public class LabellerServiceServer {
     public LabelService labelService() {
         return new LabelService(labelStorage, mainTimeSource);
     }
-    
-    @Bean
-    public LabellerGRCPServer labellerGRCPServer(LabelService labelService) {
-        return new LabellerGRCPServer(labelService);
-    }
+
 }

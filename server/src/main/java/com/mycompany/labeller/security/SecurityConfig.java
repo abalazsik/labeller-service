@@ -29,10 +29,10 @@ import org.springframework.web.filter.CorsFilter;
 public class SecurityConfig {
 
     @Bean
-    public UserDetailsService getUserDetailsService() {
+    public UserDetailsService getUserDetailsService(UsersProperties props) {
         InMemoryUserDetailsManager userDetailsManager = new InMemoryUserDetailsManager(
-                new LabellerUser("admin", "admin", Roles.Admin),
-                new LabellerUser("auditor", "auditor", Roles.Auditor)
+                new LabellerUser(props.adminUsername, props.adminPassword, Roles.Admin),
+                new LabellerUser(props.auditorUsername, props.auditorPassword, Roles.Auditor)
         );
 
         return userDetailsManager;
@@ -67,8 +67,8 @@ public class SecurityConfig {
         return (NoOpPasswordEncoder) NoOpPasswordEncoder.getInstance();
     }
 
-    public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(getUserDetailsService());
+    public void configure(AuthenticationManagerBuilder auth, UsersProperties props) throws Exception {
+        auth.userDetailsService(getUserDetailsService(props));
     }
 
     private CorsConfigurationSource corsConfigurationSource() {

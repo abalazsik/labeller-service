@@ -18,10 +18,10 @@ public class LabellerJavafxClient implements Callable {
     private int port = 10002;
 
     @CommandLine.Option(names = {"--username", "-u"}, description = "Username to login with. If omitted, the anonymus role will be selected")
-    private String username;
+    private String username = null;
 
     @CommandLine.Option(names = {"--password", "-p"}, description = "Password to login with. If omitted, the anonymus role will be selected")
-    private String password;
+    private String password = null;
 
     public static void main(String[] args) {
         int exitCode = new CommandLine(new LabellerJavafxClient()).execute(args);
@@ -31,6 +31,12 @@ public class LabellerJavafxClient implements Callable {
     @Override
     public Object call() throws Exception {
 
+        LabellerService.init(host, port);
+        
+        if (username != null && password != null) {
+            LabellerService.INSTANCE.setCredentials(username, password);
+        }
+        
         Application.launch(LabellerApplication.class, new String[]{});
 
         return null;

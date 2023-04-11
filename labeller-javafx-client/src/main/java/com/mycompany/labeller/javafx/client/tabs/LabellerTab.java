@@ -4,7 +4,6 @@ import com.mycompany.labeller.javafx.client.LabellerService;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -15,18 +14,16 @@ import javafx.scene.layout.VBox;
  *
  * @author ador
  */
-public class LabellerTab extends Tab {
+public class LabellerTab extends BaseLabellerTab {
 
     private LabellerService service;
     
     public LabellerTab() {
-        super("Labeller");
-        this.setClosable(false);
-        
-        init();
+        super("Labeller", false);
     }
 
-    private void init() {
+    @Override
+    public void initGui() {
         TextField textField = new TextField();
         Button button = new Button("Search");
 

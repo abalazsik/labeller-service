@@ -6,7 +6,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
-import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -16,23 +15,21 @@ import javafx.scene.layout.BorderPane;
  *
  * @author ador
  */
-public class LabelsTab extends Tab {
+public class LabelsTab extends BaseLabellerTab {
 
     private LabellerService service;
     private ObservableList<JFXLabel> data = FXCollections.observableArrayList();
     private static final int LIMIT = 20;
 
-    private TableView<JFXLabel> table = new TableView<JFXLabel>();
-    private Button moreButton = new Button("More");
+    private TableView<JFXLabel> table;
+    private Button moreButton;
 
     public LabelsTab() {
-        super("Labels");
-        this.setClosable(false);
-
-        init();
+        super("Labels", false);
     }
 
-    private void init() {
+    @Override
+    public void initGui() {
         TableColumn idColumn = new TableColumn("id");
         idColumn.setCellValueFactory(new PropertyValueFactory<JFXLabel, Long>("id"));
         TableColumn nameColumn = new TableColumn("name");
@@ -42,6 +39,8 @@ public class LabelsTab extends Tab {
         TableColumn techicalColumn = new TableColumn("technical");
         techicalColumn.setCellValueFactory(new PropertyValueFactory<JFXLabel, Boolean>("technical"));
 
+        table = new TableView<JFXLabel>();
+        
         table.getColumns().addAll(
                 idColumn, nameColumn, descriptionColumn, techicalColumn
         );
@@ -56,6 +55,7 @@ public class LabelsTab extends Tab {
         BorderPane borderPane = new BorderPane();
         borderPane.setCenter(table);
         
+        moreButton = new Button("More");
         
         moreButton.setOnAction(e -> {
             fetchMore();
