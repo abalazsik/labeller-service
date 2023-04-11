@@ -2,6 +2,7 @@ package com.mycompany.labeller.domain.services;
 
 import com.mycompany.labeller.domain.data.attributes.LabelClassifierData;
 import com.mycompany.labeller.domain.data.attributes.NullableStringAttribute;
+import com.mycompany.labeller.domain.exceptions.LabellerException;
 import java.util.LinkedList;
 import java.util.stream.Stream;
 
@@ -24,12 +25,18 @@ public class LabelMatcherUtil {
     }
 
     private static boolean matches(String text, Stream<String> patterns) {
-        if (text == null || text.isBlank()) {
-            throw new IllegalArgumentException("text must be non empty");
+        if (text == null) {
+            throw new LabellerException("text must be non null!");
+        }
+        
+        String trimedText = text.trim();
+        
+        if (trimedText.isBlank()) {
+            throw new LabellerException("text must be non empty!");
         }
 
         return patterns.anyMatch(pattern
-                -> matches(text, pattern)
+                -> matches(trimedText, pattern)
         );
     }
 

@@ -63,19 +63,19 @@ public class LabelServiceCucumberTestDefs {
 
     @Given("An empty repository")
     public void empty_repository() {
-        repository = new CRUDTestLabelRepository();
+        repository = new SimpleTestLabelRepository();
     }
 
     @Given("An initialized repository")
     public void initialized_repository() {
-        repository = new CRUDTestLabelRepository();
+        repository = new SimpleTestLabelRepository();
         actualId = new LabelService(repository, TEST_TIME_SOURCE).create(createTestLabel(false), admin);
         version = new LabelVersion(1L);
     }
 
     @Given("An initialized repository with label {string}")
     public void initialized_repository_with_name(String name) {
-        repository = new CRUDTestLabelRepository();
+        repository = new SimpleTestLabelRepository();
         actualId = new LabelService(repository, TEST_TIME_SOURCE).create(createTestLabel(name, false), admin);
         version = new LabelVersion(1L);
     }
@@ -86,7 +86,7 @@ public class LabelServiceCucumberTestDefs {
 
     @Given("A preloaded repository with:")
     public void preloaded_repository(List<Map<String, String>> datatable) {
-        repository = new CRUDTestLabelRepository();
+        repository = new SimpleTestLabelRepository();
         LabelService service = new LabelService(repository, TEST_TIME_SOURCE);
         for (Map<String, String> row : datatable) {
             LabelClassifierData classifierData

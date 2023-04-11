@@ -11,9 +11,10 @@ import java.time.LocalDateTime;
  */
 public class Constants {
 
-    public static final IUser auditorUser = (right) -> right.equals(Rights.LabelGetById) || right.equals(Rights.LabelAUDIT);
+    public static final IUser auditorUser = (right) -> right.equals(Rights.LabelGetById) || right.equals(Rights.LabelAUDIT) || right.equals(Rights.LabelGetAll);
     public static final IUser userWithGetByIdRight = (right) -> right.equals(Rights.LabelGetById);
     public static final IUser userWithDeleteRight = (right) -> right.equals(Rights.LabelDelete);
+    public static final IUser userWithGetAllRight = (right) -> right.equals(Rights.LabelGetAll);
     public static final IUser rightless = (right) -> false;
     public static final IUser admin = (right) -> true;
 

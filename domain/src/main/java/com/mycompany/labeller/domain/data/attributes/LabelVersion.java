@@ -9,6 +9,8 @@ import org.jmolecules.ddd.annotation.ValueObject;
  */
 @ValueObject
 public class LabelVersion extends DomainAttribute {
+    public static final LabelVersion ONE = new LabelVersion(1L);
+    
     private final long value;
 
     public LabelVersion(long value) {

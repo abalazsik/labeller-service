@@ -63,7 +63,7 @@ public class LabelService {
                 createLabel.getTechnical(),
                 createLabel.getParent(),
                 new LabelCreationDate(timeSource.now()),
-                new LabelVersion(1L)));
+                LabelVersion.ONE));
     }
 
     public void delete(LabelId id, IUser user) {

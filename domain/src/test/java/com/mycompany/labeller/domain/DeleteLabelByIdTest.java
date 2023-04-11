@@ -25,7 +25,7 @@ public class DeleteLabelByIdTest {
     public void callsRepositoryRemovesLabel() {
         //given
         labelService = new LabelService(
-                new CRUDTestLabelRepository(),
+                new SimpleTestLabelRepository(),
                 TEST_TIME_SOURCE);
         LabelId id = labelService.create(createTestLabel(false), admin);
 
@@ -40,7 +40,7 @@ public class DeleteLabelByIdTest {
     public void throwsErrorWhenNoRightToDelete() {
         //given
         labelService = new LabelService(
-                new CRUDTestLabelRepository(),
+                new SimpleTestLabelRepository(),
                 TEST_TIME_SOURCE);
         LabelId id = labelService.create(createTestLabel(false), admin);
 
@@ -54,7 +54,7 @@ public class DeleteLabelByIdTest {
     public void throwsErrorWhenDeletingNonExistentLabel() {
         //given
         labelService = new LabelService(
-                new CRUDTestLabelRepository(),
+                new SimpleTestLabelRepository(),
                 TEST_TIME_SOURCE);
         LabelId id = labelService.create(createTestLabel(false), admin);
 
@@ -69,7 +69,7 @@ public class DeleteLabelByIdTest {
     public void throwsErrorWhenDeletingTechnicalLabel() {
         //given
         labelService = new LabelService(
-                new CRUDTestLabelRepository(),
+                new SimpleTestLabelRepository(),
                 TEST_TIME_SOURCE);
         LabelId id = labelService.create(createTestLabel(true), admin);
 

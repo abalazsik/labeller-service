@@ -4,9 +4,12 @@ import com.mycompany.labeller.domain.data.CreateLabelWithDate;
 import com.mycompany.labeller.domain.data.Label;
 import com.mycompany.labeller.domain.data.LabelRange;
 import com.mycompany.labeller.domain.data.UpdateLabelWithDate;
+import com.mycompany.labeller.domain.data.attributes.LabelCreationDate;
 import com.mycompany.labeller.domain.data.attributes.LabelId;
 import com.mycompany.labeller.domain.data.attributes.LabelName;
+import com.mycompany.labeller.domain.data.attributes.LabelUpdateDate;
 import com.mycompany.labeller.domain.data.attributes.LabelVersion;
+import com.mycompany.labeller.domain.data.attributes.NullableStringAttribute;
 import com.mycompany.labeller.domain.repository.LabelRepository;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,8 +22,14 @@ import java.util.stream.Stream;
  */
 public class SimpleTestLabelRepository implements LabelRepository {
 
+    private long idSeq = 1;
+    private boolean unlinkWasCalled = false;
     protected List<Label> labels;
 
+    public SimpleTestLabelRepository() {
+        labels = new ArrayList<>();
+    }
+    
     public SimpleTestLabelRepository(Label label) {
         labels = new ArrayList<>();
         if (label != null) {
@@ -35,22 +44,34 @@ public class SimpleTestLabelRepository implements LabelRepository {
 
     @Override
     public Stream<Label> getClassifiableLabels() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return this.labels.stream().filter(label -> NullableStringAttribute.getValue(label.getClassifierData()) != null);
     }
 
     @Override
     public LabelId create(CreateLabelWithDate createLabel) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        Label label = new Label(new LabelId(idSeq++),
+                createLabel.getName(),
+                createLabel.getDescription(),
+                createLabel.getClassifierData(),
+                createLabel.getTechnical(),
+                createLabel.getParent(),
+                createLabel.getCreationTime(),
+                new LabelUpdateDate(LabelCreationDate.getValue(createLabel.getCreationTime())),
+                new LabelVersion(1L));
+
+        this.labels.add(label);
+
+        return label.getId();
     }
 
     @Override
     public void delete(LabelId id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        this.labels.removeIf(label -> label.getId().equals(id));
     }
 
     @Override
     public void unlink(LabelId id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        this.unlinkWasCalled = true;
     }
 
     @Override
@@ -81,7 +102,32 @@ public class SimpleTestLabelRepository implements LabelRepository {
 
     @Override
     public LabelVersion update(UpdateLabelWithDate update) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        Label oldLabel = this.getById(update.getId()).get();
+
+        Label newLabel = new Label(
+                update.getId(),
+                update.getName(),
+                update.getDescription(),
+                update.getClassifierData(),
+                update.getTechnical(),
+                update.getParent(),
+                oldLabel.getCreationDate(),
+                update.getUpdateDate(),
+                update.getVersion().inc());
+
+        this.delete(update.getId());
+        this.labels.add(newLabel);
+        return newLabel.getVersion();
+    }
+    
+    public boolean unlinkWasCalled() {
+        return this.unlinkWasCalled;
+    }
+    
+    public void reset() {
+        this.idSeq = 1;
+        this.labels.clear();
+        this.unlinkWasCalled = false;
     }
 
 }

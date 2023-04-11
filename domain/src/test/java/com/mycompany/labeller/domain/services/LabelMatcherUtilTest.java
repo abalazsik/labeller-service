@@ -1,6 +1,7 @@
 package com.mycompany.labeller.domain.services;
 
 import com.mycompany.labeller.domain.data.attributes.LabelClassifierData;
+import com.mycompany.labeller.domain.exceptions.LabellerException;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -16,8 +17,22 @@ public class LabelMatcherUtilTest {
     }
 
     @Test
-    public void expectMatchesThrowsException2() {
+    public void expectMatchesReturnsFalse() {
         Assertions.assertThat(LabelMatcherUtil.matches("text", new LabelClassifierData(null))).isFalse();
+    }
+
+    @Test
+    public void expectMatchesThrowsExceptionWhenTextIsNull() {
+        Assertions.assertThatThrownBy(
+                () -> LabelMatcherUtil.matches(null, new LabelClassifierData("data"))
+        ).isInstanceOf(LabellerException.class);
+    }
+    
+    @Test
+    public void expectMatchesThrowsExceptionWhenTextIsEmpty() {
+        Assertions.assertThatThrownBy(
+                () -> LabelMatcherUtil.matches(" ", new LabelClassifierData("data"))
+        ).isInstanceOf(LabellerException.class);
     }
 
     @Test
@@ -36,13 +51,13 @@ public class LabelMatcherUtilTest {
         Assertions.assertThat(LabelMatcherUtil.getPatterns(new LabelClassifierData("test junit spring")))
                 .containsExactly("test", "junit", "spring");
     }
-    
+
     @Test
     public void expectGetPatternsReturnsMultipleSimplePatternsWhitespace() {
         Assertions.assertThat(LabelMatcherUtil.getPatterns(new LabelClassifierData("test  junit")))
                 .containsExactly("test", "junit");
     }
-    
+
     @Test
     public void expectGetPatternsReturnsComplexPatterns() {
         Assertions.assertThat(LabelMatcherUtil.getPatterns(new LabelClassifierData("test \"junit spring\"")))

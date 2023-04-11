@@ -4,8 +4,11 @@ import com.mycompany.labeller.commons.CachedLabelId;
 import com.mycompany.labeller.commons.security.SecurityUtil;
 import com.mycompany.labeller.domain.data.Label;
 import com.mycompany.labeller.domain.data.LabelRange;
-import com.mycompany.labeller.domain.data.attributes.GetLabelsForString;
+import com.mycompany.labeller.domain.data.GetLabelsForString;
+import com.mycompany.labeller.domain.data.attributes.GetLabelsForStringText;
 import com.mycompany.labeller.domain.data.attributes.LabelId;
+import com.mycompany.labeller.domain.data.attributes.LabelRangeFrom;
+import com.mycompany.labeller.domain.data.attributes.LabelRangeLimit;
 import com.mycompany.labeller.domain.data.attributes.LabelVersion;
 import com.mycompany.labeller.domain.services.LabelService;
 import com.mycompany.labeller.grcp.CreateLabelRequest;
@@ -31,7 +34,7 @@ import java.util.Optional;
  */
 public class LabellerGRCPServer extends LabellerServiceGrpc.LabellerServiceImplBase {
 
-    private LabelService labelService;
+    private final LabelService labelService;
 
     public LabellerGRCPServer(LabelService labelService) {
         this.labelService = labelService;
@@ -86,7 +89,7 @@ public class LabellerGRCPServer extends LabellerServiceGrpc.LabellerServiceImplB
     public void getLabelsForString(GetLabelsForStringRequest request, StreamObserver<GetLabelsForStringResponse> responseObserver) {
         try {
             GetLabelsForStringResponse.Builder builder = GetLabelsForStringResponse.newBuilder();
-            labelService.getLabelsForString(new GetLabelsForString(request.getText()), SecurityUtil.getUser()).forEach(label -> {
+            labelService.getLabelsForString(new GetLabelsForString(new GetLabelsForStringText(request.getText())), SecurityUtil.getUser()).forEach(label -> {
                 builder.addLabels(LabellerGRPCMapper.toGRPC(label));
             });
             responseObserver.onNext(builder.build());
@@ -97,7 +100,7 @@ public class LabellerGRCPServer extends LabellerServiceGrpc.LabellerServiceImplB
 
     @Override
     public void getAll(GetAllLabelsRequest request, StreamObserver<GetAllLabelsResponse> responseObserver) {
-        LabelRange range = new LabelRange(request.getFrom(), request.getLimit());
+        LabelRange range = new LabelRange(new LabelRangeFrom(request.getFrom()), new LabelRangeLimit(request.getLimit()));
 
         try {
             GetAllLabelsResponse.Builder builder = GetAllLabelsResponse.newBuilder();
