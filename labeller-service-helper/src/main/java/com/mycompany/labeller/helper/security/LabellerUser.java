@@ -1,5 +1,5 @@
 
-package com.mycompany.labeller.commons.security;
+package com.mycompany.labeller.helper.security;
 
 import com.mycompany.labeller.domain.user.IUser;
 import java.util.Collection;

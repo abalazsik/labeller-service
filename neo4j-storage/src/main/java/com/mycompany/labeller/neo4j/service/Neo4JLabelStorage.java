@@ -1,6 +1,5 @@
 package com.mycompany.labeller.neo4j.service;
 
-import com.mycompany.labeller.commons.CachedLabelId;
 import com.mycompany.labeller.domain.data.CreateLabelWithDate;
 import com.mycompany.labeller.domain.data.Label;
 import com.mycompany.labeller.domain.data.LabelRange;
@@ -15,6 +14,7 @@ import com.mycompany.labeller.domain.data.attributes.LabelUpdateDate;
 import com.mycompany.labeller.domain.data.attributes.LabelVersion;
 import com.mycompany.labeller.domain.data.attributes.NullableStringAttribute;
 import com.mycompany.labeller.domain.repository.LabelRepository;
+import com.mycompany.labeller.helper.CachedLabelId;
 import com.mycompany.labeller.neo4j.Neo4JLabel;
 import com.mycompany.labeller.neo4j.repository.Neo4JLabelRepository;
 import java.util.Optional;

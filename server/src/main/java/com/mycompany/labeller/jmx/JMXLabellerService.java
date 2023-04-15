@@ -1,9 +1,9 @@
 package com.mycompany.labeller.jmx;
 
-import com.mycompany.labeller.commons.CachedLabelId;
-import com.mycompany.labeller.commons.roles.Roles;
 import com.mycompany.labeller.domain.data.Label;
 import com.mycompany.labeller.domain.services.LabelService;
+import com.mycompany.labeller.helper.CachedLabelId;
+import com.mycompany.labeller.helper.roles.Roles;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jmx.export.annotation.ManagedOperation;

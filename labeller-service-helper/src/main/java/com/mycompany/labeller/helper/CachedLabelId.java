@@ -1,4 +1,4 @@
-package com.mycompany.labeller.commons;
+package com.mycompany.labeller.helper;
 
 import com.mycompany.labeller.domain.data.attributes.LabelId;
 import java.util.HashMap;

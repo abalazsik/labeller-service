@@ -1,7 +1,5 @@
 package com.mycompany.labeller.service.grpc.port;
 
-import com.mycompany.labeller.commons.CachedLabelId;
-import com.mycompany.labeller.commons.security.SecurityUtil;
 import com.mycompany.labeller.domain.data.Label;
 import com.mycompany.labeller.domain.data.LabelRange;
 import com.mycompany.labeller.domain.data.GetLabelsForString;
@@ -24,6 +22,8 @@ import com.mycompany.labeller.grcp.GetLabelsForStringResponse;
 import com.mycompany.labeller.grcp.LabellerServiceGrpc;
 import com.mycompany.labeller.grcp.UpdateLabelRequest;
 import com.mycompany.labeller.grcp.UpdateLabelResponse;
+import com.mycompany.labeller.helper.CachedLabelId;
+import com.mycompany.labeller.helper.security.SecurityUtil;
 import com.mycompany.labeller.service.grpc.mapper.LabellerGRPCMapper;
 import io.grpc.stub.StreamObserver;
 import java.util.Optional;

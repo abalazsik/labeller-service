@@ -1,4 +1,4 @@
-package com.mycompany.labeller.commons.roles;
+package com.mycompany.labeller.helper.roles;
 
 import com.mycompany.labeller.domain.user.IUser;
 import com.mycompany.labeller.domain.user.Rights;

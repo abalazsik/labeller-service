@@ -1,7 +1,7 @@
 package com.mycompany.labeller.h2.service;
 
-import com.mycompany.labeller.commons.CachedLabelId;
 import com.mycompany.labeller.h2.H2Label;
+import com.mycompany.labeller.helper.CachedLabelId;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.springframework.jdbc.core.RowMapper;

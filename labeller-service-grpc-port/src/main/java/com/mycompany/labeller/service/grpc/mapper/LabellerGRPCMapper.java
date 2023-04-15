@@ -1,6 +1,5 @@
 package com.mycompany.labeller.service.grpc.mapper;
 
-import com.mycompany.labeller.commons.CachedLabelId;
 import com.mycompany.labeller.domain.data.CreateLabel;
 import com.mycompany.labeller.domain.data.Label;
 import com.mycompany.labeller.domain.data.UpdateLabel;
@@ -15,6 +14,7 @@ import com.mycompany.labeller.domain.data.attributes.NullableStringAttribute;
 import com.mycompany.labeller.grcp.CreateLabelRequest;
 import com.mycompany.labeller.grcp.UpdateLabelRequest;
 import com.mycompany.labeller.grcp.UpdateLabelResponse;
+import com.mycompany.labeller.helper.CachedLabelId;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 

@@ -1,12 +1,12 @@
 package com.mycompany.labeller.web;
 
-import com.mycompany.labeller.commons.roles.Roles;
 import com.mycompany.labeller.domain.data.LabelRange;
 import com.mycompany.labeller.domain.data.attributes.LabelCreationDate;
 import com.mycompany.labeller.domain.data.attributes.LabelRangeFrom;
 import com.mycompany.labeller.domain.data.attributes.LabelRangeLimit;
 import com.mycompany.labeller.domain.data.attributes.NullableStringAttribute;
 import com.mycompany.labeller.domain.services.LabelService;
+import com.mycompany.labeller.helper.roles.Roles;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.concurrent.atomic.AtomicLong;

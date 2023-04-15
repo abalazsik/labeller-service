@@ -1,6 +1,5 @@
 package com.mycompany.labeller.web.mapper;
 
-import com.mycompany.labeller.commons.CachedLabelId;
 import com.mycompany.labeller.domain.data.CreateLabel;
 import com.mycompany.labeller.domain.data.Label;
 import com.mycompany.labeller.domain.data.GetLabelsForString;
@@ -11,6 +10,7 @@ import com.mycompany.labeller.domain.data.attributes.LabelName;
 import com.mycompany.labeller.domain.data.attributes.LabelTechnical;
 import com.mycompany.labeller.domain.data.attributes.NullableLocalDateTimeAttribute;
 import com.mycompany.labeller.domain.data.attributes.NullableStringAttribute;
+import com.mycompany.labeller.helper.CachedLabelId;
 import com.mycompany.labeller.web.data.WebCreateLabel;
 import com.mycompany.labeller.web.data.WebGetLabelsForString;
 import com.mycompany.labeller.web.data.WebLabel;
