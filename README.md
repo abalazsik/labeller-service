@@ -1,4 +1,4 @@
-Labeller-diagram
+Labeller-service
 ====
 Learning project, to experiment with stuff.
 

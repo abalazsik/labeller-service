@@ -1,3 +1,16 @@
 target/
 nbactions.xml
 labeller-react-frontend/node_modules/*
+
+
+/labeller-service-grpc-port/nb-configuration.xml
+/neo4j-storage/nb-configuration.xml
+/domain/nb-configuration.xml
+/labeller-javafx-client/nb-configuration.xml
+/labeller-grpc-intf/nb-configuration.xml
+/h2-storage/nb-configuration.xml
+/commons/nb-configuration.xml
+/server/nb-configuration.xml
+/nb-configuration.xml
+
+docker-server/labeller-service.jar

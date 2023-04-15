@@ -10,14 +10,11 @@
     <name>labeller-service-grpc-port</name>
     <packaging>jar</packaging>
     <properties>
+        <maven.compiler.source>13</maven.compiler.source>
+        <maven.compiler.target>13</maven.compiler.target>
     </properties>
     
     <dependencies>
-        <!--dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-autoconfigure</artifactId>
-            <version>2.7.0</version>
-        </dependency-->
         <dependency>
             <groupId>com.mycompany</groupId>
             <artifactId>labeller-grpc-intf</artifactId>

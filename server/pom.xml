@@ -15,8 +15,8 @@
     
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.source>13</maven.compiler.source>
+        <maven.compiler.target>13</maven.compiler.target>
         <openapi.version>1.6.9</openapi.version>
     </properties>
     
@@ -89,6 +89,7 @@
     </dependencies>
     
     <build>
+        <finalName>labeller-service</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
@@ -100,6 +101,7 @@
                         <enabled>true</enabled>
                         <configuration>${project.basedir}/src/layers.xml</configuration>
                     </layers>
+                    <outputDirectory>../docker-server</outputDirectory>
                 </configuration>
             </plugin>
             <plugin>
