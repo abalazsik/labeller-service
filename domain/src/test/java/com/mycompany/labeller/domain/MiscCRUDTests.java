@@ -6,6 +6,7 @@ import com.mycompany.labeller.domain.data.attributes.LabelId;
 import com.mycompany.labeller.domain.data.attributes.LabelName;
 import com.mycompany.labeller.domain.data.attributes.LabelTechnical;
 import com.mycompany.labeller.domain.data.attributes.LabelVersion;
+import com.mycompany.labeller.domain.exceptions.EntityDetachedException;
 import com.mycompany.labeller.domain.exceptions.LabellerException;
 import com.mycompany.labeller.domain.services.LabelService;
 import org.assertj.core.api.Assertions;
@@ -44,7 +45,7 @@ public class MiscCRUDTests {
                                 LabelTechnical.TRUE, null,
                                 new LabelVersion(99)),
                         Constants.admin)
-        ).isInstanceOf(LabellerException.class);
+        ).isInstanceOf(EntityDetachedException.class);
 
     }
 

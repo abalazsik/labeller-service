@@ -12,6 +12,7 @@ import com.mycompany.labeller.domain.data.attributes.LabelId;
 import com.mycompany.labeller.domain.data.attributes.LabelUpdateDate;
 import com.mycompany.labeller.domain.data.attributes.LabelVersion;
 import com.mycompany.labeller.domain.exceptions.AccessRightException;
+import com.mycompany.labeller.domain.exceptions.EntityDetachedException;
 import com.mycompany.labeller.domain.exceptions.LabellerException;
 import com.mycompany.labeller.domain.repository.LabelRepository;
 import com.mycompany.labeller.domain.user.IUser;
@@ -99,7 +100,7 @@ public class LabelService {
         }
 
         if (!optional.get().getVersion().equals(update.getVersion())) {
-            throw new LabellerException("Version not up-to-date!");
+            throw new EntityDetachedException("Version not up-to-date!");
         }
 
         Optional<Label> byName = repository.getByName(update.getName());

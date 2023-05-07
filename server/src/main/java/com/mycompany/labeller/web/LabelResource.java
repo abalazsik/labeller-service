@@ -16,6 +16,7 @@ import com.mycompany.labeller.domain.data.attributes.LabelVersion;
 import com.mycompany.labeller.domain.exceptions.LabellerException;
 import com.mycompany.labeller.domain.data.attributes.LabelRangeFrom;
 import com.mycompany.labeller.domain.data.attributes.LabelRangeLimit;
+import com.mycompany.labeller.domain.exceptions.EntityDetachedException;
 import com.mycompany.labeller.helper.CachedLabelId;
 import com.mycompany.labeller.helper.security.SecurityUtil;
 import com.mycompany.labeller.web.data.WebGetLabelsForString;
@@ -117,8 +118,11 @@ public class LabelResource {
 
     @ExceptionHandler(LabellerException.class)
     public ResponseEntity<WebLabellerException> handleException(LabellerException ex) {
+        
+        int statusCode = (ex instanceof EntityDetachedException) ? 428 : 500;
+        
         return ResponseEntity
-                .status(500)
+                .status(statusCode)
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(new WebLabellerException(ex.getMessage()));
     }
