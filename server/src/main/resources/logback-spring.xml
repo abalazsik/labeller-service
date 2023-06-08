@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="com.mycompany.labeller.LabellerServiceServer" level="INFO">
+        <appender-ref ref="STDOUT" />
+    </logger>
+    <logger name="com.mycompany.labeller.h2.service.H2LabelStorage" level="TRACE">
+        <appender-ref ref="STDOUT" />
+    </logger>
+    <logger name="com.mycompany.labeller.neo4j.service.Neo4JLabelStorage" level="TRACE">
+        <appender-ref ref="STDOUT" />
+    </logger>
+</configuration>

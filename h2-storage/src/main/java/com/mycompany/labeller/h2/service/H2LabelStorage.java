@@ -19,6 +19,8 @@ import com.mycompany.labeller.h2.repository.H2LabelRepostitory;
 
 import java.util.Optional;
 import java.util.stream.Stream;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -29,22 +31,27 @@ import org.springframework.stereotype.Component;
 @Component
 public class H2LabelStorage implements LabelRepository {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(H2LabelStorage.class);
+    
     @Autowired
     private H2LabelRepostitory repository;
 
     @Override
     public Stream<Label> getAll(LabelRange range) {
+        LOGGER.trace("Executing getAll");
         return repository.getAll(range.getFrom().getValue(), range.getLimit().getValue())
                 .map(this::toDomain);
     }
 
     @Override
     public Stream<Label> getClassifiableLabels() {
+        LOGGER.trace("Executing getClassifiableLabels");
         return repository.getByClassifiable().map(this::toDomain);
     }
 
     @Override
     public LabelId create(CreateLabelWithDate createLabel) {
+        LOGGER.trace("Executing create");
         H2Label h2Label = new H2Label(
                 null,
                 createLabel.getName().getValue(),
@@ -64,22 +71,25 @@ public class H2LabelStorage implements LabelRepository {
 
     @Override
     public void delete(LabelId id) {
+        LOGGER.trace("Executing delete");
         repository.delete(id.getValue());
     }
 
     @Override
     public Optional<Label> getById(LabelId id) {
+        LOGGER.trace("Executing getById");
         return repository.getById(id.getValue()).map(this::toDomain);
     }
 
     @Override
     public void unlink(LabelId id) {
+        LOGGER.trace("Executing unlink");
         repository.unlink(id.getValue());
     }
 
     @Override
     public LabelVersion update(UpdateLabelWithDate update) {
-
+        LOGGER.trace("Executing update");
         H2Label h2Label = new H2Label(
                 update.getId(),
                 update.getName().getValue(),
@@ -98,10 +108,17 @@ public class H2LabelStorage implements LabelRepository {
 
     @Override
     public Optional<Label> getByName(LabelName name) {
+        LOGGER.trace("Executing getByName");
         return repository.getByName(name.getValue()).map(this::toDomain);
     }
 
-    private Label toDomain(H2Label h2Label) {
+    @Override
+    public int countLabels() {
+        LOGGER.trace("Executing countLabels");
+        return (int)repository.count();
+    }
+    
+        private Label toDomain(H2Label h2Label) {
         return new Label(h2Label.getId(),
                 new LabelName(h2Label.getName()),
                 new LabelDescription(h2Label.getDescription()),
@@ -112,11 +129,6 @@ public class H2LabelStorage implements LabelRepository {
                 new LabelUpdateDate(h2Label.getUpdateDate()),
                 new LabelVersion(h2Label.getVersion())
         );
-    }
-
-    @Override
-    public int countLabels() {
-        return (int)repository.count();
     }
 
 }

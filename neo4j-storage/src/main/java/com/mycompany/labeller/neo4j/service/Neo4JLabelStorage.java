@@ -19,6 +19,8 @@ import com.mycompany.labeller.neo4j.Neo4JLabel;
 import com.mycompany.labeller.neo4j.repository.Neo4JLabelRepository;
 import java.util.Optional;
 import java.util.stream.Stream;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
@@ -30,11 +32,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class Neo4JLabelStorage implements LabelRepository {
     
+    private static final Logger LOGGER = LoggerFactory.getLogger(Neo4JLabelStorage.class);
+    
     @Autowired
     private Neo4JLabelRepository repository;
     
     @Override
     public Stream<Label> getAll(LabelRange range) {
+         LOGGER.trace("Executing getAll");
         int from = range.getFrom().getValue();
         int limit = range.getLimit().getValue();
         return repository.findAll(PageRequest.of(from / limit, limit)).stream().map(this::toDomain);
@@ -42,11 +47,13 @@ public class Neo4JLabelStorage implements LabelRepository {
     
     @Override
     public Stream<Label> getClassifiableLabels() {
+        LOGGER.trace("Executing getClassifiableLabels");
         return repository.getByClassifiable().map(this::toDomain);
     }
     
     @Override
     public LabelId create(CreateLabelWithDate createLabel) {
+        LOGGER.trace("Executing create");
         Neo4JLabel n4l = new Neo4JLabel();
         
         n4l.setName(createLabel.getName().getValue());
@@ -69,26 +76,31 @@ public class Neo4JLabelStorage implements LabelRepository {
     
     @Override
     public void delete(LabelId id) {
+        LOGGER.trace("Executing delete");
         repository.deleteById(id.getValue());
     }
     
     @Override
     public void unlink(LabelId id) {
+        LOGGER.trace("Executing unlink");
         repository.unlink(id.getValue());
     }
     
     @Override
     public Optional<Label> getById(LabelId id) {
+        LOGGER.trace("Executing getById");
         return repository.findById(id.getValue()).map(this::toDomain);
     }
     
     @Override
     public Optional<Label> getByName(LabelName name) {
+        LOGGER.trace("Executing getByName");
         return repository.getByName(name.getValue()).map(this::toDomain);
     }
     
     @Override
     public LabelVersion update(UpdateLabelWithDate update) {
+        LOGGER.trace("Executing update");
         Neo4JLabel n4l = repository.findById(update.getId().getValue()).get();
         
         n4l.setDescription(NullableStringAttribute.getValue(update.getDescription()));
