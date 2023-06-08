@@ -27,5 +27,6 @@ public interface LabelRepository {
     public Optional<Label> getById(LabelId id);
     public Optional<Label> getByName(LabelName name);
     public LabelVersion update(UpdateLabelWithDate update);
+    public int countLabels();
     
 }

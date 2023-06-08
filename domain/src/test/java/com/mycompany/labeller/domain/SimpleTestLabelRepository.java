@@ -130,4 +130,9 @@ public class SimpleTestLabelRepository implements LabelRepository {
         this.unlinkWasCalled = false;
     }
 
+    @Override
+    public int countLabels() {
+        return this.labels.size();
+    }
+
 }

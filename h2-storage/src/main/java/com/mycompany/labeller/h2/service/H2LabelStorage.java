@@ -114,4 +114,9 @@ public class H2LabelStorage implements LabelRepository {
         );
     }
 
+    @Override
+    public int countLabels() {
+        return (int)repository.count();
+    }
+
 }

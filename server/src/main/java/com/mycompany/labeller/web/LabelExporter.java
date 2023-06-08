@@ -33,7 +33,9 @@ public class LabelExporter {
 
         AtomicLong rowId = new AtomicLong(0);
 
-        labelService.getAll(new LabelRange(new LabelRangeFrom(0), new LabelRangeLimit(500)), Roles.Admin).forEachOrdered(label -> {
+        labelService.getAll(new LabelRange(
+                new LabelRangeFrom(0),
+                new LabelRangeLimit(labelService.countLabels())), Roles.Admin).forEachOrdered(label -> {
             XSSFRow row = sheet.createRow(rowId.intValue());
             row.createCell(0).setCellValue(label.getId().getValue());
             row.createCell(1).setCellValue(label.getName().getValue());

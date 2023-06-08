@@ -126,5 +126,10 @@ public class Neo4JLabelStorage implements LabelRepository {
                 new LabelVersion(n4jl.getVersion())
         );
     }
+
+    @Override
+    public int countLabels() {
+        return (int)repository.count();
+    }
     
 }

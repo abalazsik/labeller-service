@@ -122,6 +122,10 @@ public class LabelService {
 
         return repository.update(updateLabelWithDate);
     }
+    
+    public int countLabels() {
+        return repository.countLabels();
+    }
 
     private void checkRight(String right, IUser user) {
         if (!user.hasRight(right)) {
