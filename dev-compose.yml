@@ -1,0 +1,41 @@
+version: '3'
+
+services:
+  database:
+    image: neo4j:4.4
+    hostname: neo4j
+    ports:
+    - "7474:7474"
+    - "7687:7687"
+    environment:
+      NEO4J_AUTH: neo4j/77A18HL6
+    healthcheck:
+      test: wget http://localhost:7474 || exit 1
+      interval: 1s
+      timeout: 10s
+      retries: 20
+      start_period: 3s
+  
+  loki:
+    image: grafana/loki:2.8.0
+    hostname: loki
+    ports:
+    - "3100:3100"
+    environment:
+    - config.file:/mnt/config/loki-config.yaml
+    volumes:
+    - ./loki/loki-config.yaml:/mnt/config/loki-config.yaml
+
+  grafana:
+    image: grafana/grafana-oss
+    hostname: grafana
+    depends_on:
+        - loki
+    environment:
+      GF_FEATURE_TOGGLES_ENABLE: publicDashboards
+    ports:
+    - "3000:3000"
+    links:
+    - loki:loki
+    volumes:
+    - ./loki/grafana-loki-datasource.yaml:/etc/grafana/provisioning/datasources/loki.yaml
